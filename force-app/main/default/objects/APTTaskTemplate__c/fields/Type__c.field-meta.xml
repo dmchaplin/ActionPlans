@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Category</label>
+    <picklist>
+        <picklistValues>
+            <fullName>Email</fullName>
+            <default>false</default>
+        </picklistValues>
+        <picklistValues>
+            <fullName>Phone Call</fullName>
+            <default>false</default>
+        </picklistValues>
+        <picklistValues>
+            <fullName>Meeting</fullName>
+            <default>false</default>
+        </picklistValues>
+        <picklistValues>
+            <fullName>Misc</fullName>
+            <default>false</default>
+        </picklistValues>
+        <sorted>false</sorted>
+    </picklist>
+    <required>false</required>
+    <type>Picklist</type>
+</CustomField>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SkipDay__c</fullName>
+    <externalId>false</externalId>
+    <label>Skip Day</label>
+    <picklist>
+        <controllingField>SkipWeekends__c</controllingField>
+        <picklistValues>
+            <fullName>Friday</fullName>
+            <default>false</default>
+            <controllingFieldValues>checked</controllingFieldValues>
+        </picklistValues>
+        <picklistValues>
+            <fullName>Monday</fullName>
+            <default>false</default>
+            <controllingFieldValues>checked</controllingFieldValues>
+        </picklistValues>
+        <sorted>false</sorted>
+    </picklist>
+    <required>false</required>
+    <type>Picklist</type>
+</CustomField>
