@@ -37,6 +37,9 @@ trigger ActionPlanTaskTrigger on Task ( after update, after delete , before dele
 	    if( !closedTasks.isEmpty() ) {
 	        ActionPlansTaskTriggerUtilities.initDependentTaskWork( closedTasks);
 	    }
+
+
+		//dc pretty sure this is redudant.  it done also done down below but more than just status
 	    //update status to in progress for AP Tasks
 	     if( !inProgressTasks.isEmpty() ) {
 	        ActionPlansTaskTriggerUtilities.updateAPTasksStatus( inProgressTasks );
