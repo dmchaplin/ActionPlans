@@ -52,6 +52,8 @@ trigger ActionPlanTaskTrigger on Task ( after update, after delete , before dele
 	    	for(APTaskTemplate__c apt : aptList){
 	    		mapAPTasks.put(apt.Id, apt);
 	    	}
+
+			//update the Action plan with changes from the tasks results
 			List<APTaskTemplate__c> lUpsert = new List<APTaskTemplate__c>();
 			APTaskTemplate__c tmp ;
 			Integer taskTemplateNameLength	= APTaskTemplate__c.Name.getDescribe().getLength();
