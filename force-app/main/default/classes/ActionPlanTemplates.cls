@@ -216,7 +216,8 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
             if( TempApId != null ) {
                 aptTasks = [ select a.Type__c, a.Subject__c, a.Priority__c, a.Dependent__c, a.Name, a.User__c, taskIndex__c,
             				 a.User__r.Name, a.Id, a.DaysFromStart__c, a.CreatedById, a.Action_Plan_Template__c, a.APTTaskTemplate__c,
-            				 a.APTTaskTemplate__r.Subject__c, a.Reminder__c, a.SendEmail__c, a.Comments__c
+            				 a.APTTaskTemplate__r.Subject__c, a.Reminder__c, a.SendEmail__c, a.Comments__c,
+							 a.DueDateRelation__c, a.RelatedDatefield__c, a.CreateTaskWhen__c, a.AssignToType__c
             				 From APTTaskTemplate__c a 
             				 where a.Action_Plan_Template__c =: TempApId  order by taskIndex__c ASC ];
             }

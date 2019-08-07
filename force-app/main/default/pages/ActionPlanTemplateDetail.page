@@ -101,6 +101,9 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 					<apex:column >&nbsp;</apex:column>
                     <apex:column id="columnOne" headerValue="{!$ObjectType.APTTaskTemplate__c.fields.Subject__c.label}" value="{!task.Subject__c}" />
                     <apex:column headerValue="{!$ObjectType.APTTaskTemplate__c.fields.APTTaskTemplate__c.label}" value="{!task.APTTaskTemplate__r.Subject__c}"   />
+
+					<apex:column value="{!task.DueDateRelation__c}" headerValue="{!$ObjectType.APTTaskTemplate__c.fields.DueDateRelation__c.label}" / >
+
                     <apex:column value="{!task.DaysFromStart__c}" >
                     	<apex:facet name="header">{!$ObjectType.APTTaskTemplate__c.fields.DaysFromStart__c.label}
 							<span id="daysAfterTtip_help" class="helpButton">
@@ -108,7 +111,24 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 							</span>
 						</apex:facet>
                     </apex:column>
+
+        
                     
+                    <apex:column headerValue="{!$ObjectType.APTTaskTemplate__c.fields.RelatedDateField__c.label}">
+                        <apex:outputField value="{!task.RelatedDateField__c}" />
+                    </apex:column>
+
+                    <apex:column headerValue="{!$ObjectType.APTTaskTemplate__c.fields.CreateTaskWhen__c.label}">
+                        <apex:outputField  value="{!task.CreateTaskWhen__c}" />
+                    </apex:column>
+
+
+                    <apex:column headerValue="{!$ObjectType.APTTaskTemplate__c.fields.AssignToType__c.label}">
+                        <apex:outputField value="{!task.AssignToType__c}" />
+                    </apex:column>
+
+
+
 					<apex:column headerValue="{!$ObjectType.APTaskTemplate__c.fields.User__c.label}" styleClass="assigned_to_field" >
                     	<apex:outputField value="{!task.User__c}"  />
                     </apex:column>
