@@ -3,7 +3,7 @@
     <fullName>DaysFromStart__c</fullName>
     <externalId>false</externalId>
     <inlineHelpText>test</inlineHelpText>
-    <label>Days After</label>
+    <label>Days Before/After</label>
     <precision>3</precision>
     <required>true</required>
     <scale>0</scale>
