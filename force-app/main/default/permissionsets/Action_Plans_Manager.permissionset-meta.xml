@@ -123,12 +123,27 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>APTTaskTemplate__c.AssignToType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>APTTaskTemplate__c.Comments__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>APTTaskTemplate__c.CreateTaskWhen__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>APTTaskTemplate__c.Dependent__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>APTTaskTemplate__c.DueDateRelation__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -139,6 +154,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>APTTaskTemplate__c.Priority__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>APTTaskTemplate__c.RelatedDateField__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
