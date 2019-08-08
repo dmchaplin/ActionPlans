@@ -113,6 +113,9 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
                         <apex:column id="columnOne" headerValue="{!$ObjectType.APTaskTemplate__c.fields.Subject__c.label}" headerClass="subjectCol">
                             <apex:outputText id="subject">{!task.Subject__c}</apex:outputText>
                         </apex:column>
+                        <apex:column  headerValue="{!$ObjectType.APTaskTemplate__c.fields.DueDateRelation__c.label}">
+                            <apex:outputText value="{!task.DueDateRelation__c}" />
+                        </apex:column>
                         <apex:column id="dependency" headerValue="{!$ObjectType.APTaskTemplate__c.fields.APTaskTemplate__c.label}" headerClass="dependencyColumn">
                             <apex:outputText >{!task.APTaskTemplate__r.Subject__c}</apex:outputText>
                         </apex:column>
@@ -123,10 +126,25 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
                                 </span>
                             </apex:facet>
                        </apex:column>
+
+                        <apex:column headerValue="{!$ObjectType.APTaskTemplate__c.fields.RelatedDateField__c.label}">
+                            <apex:outputField value="{!task.RelatedDateField__c}" />
+                        </apex:column>
+
+                        <apex:column headerValue="{!$ObjectType.APTaskTemplate__c.fields.CreateTaskWhen__c.label}">
+                            <apex:outputField value="{!task.CreateTaskWhen__c}" />
+                        </apex:column>
+
                         <apex:column headerValue="{!$ObjectType.APTaskTemplate__c.fields.ActivityDate__c.label}" headerClass="dateCol">
                             <span style="color:#cc0000"><apex:outputField value="{!task.ActivityDate__c}" rendered="{!IF(task.ActivityDate__c < TODAY() && task.Status__c != 'Completed', true, false)}" /></span>
                             <apex:outputField value="{!task.ActivityDate__c}" rendered="{!IF(task.ActivityDate__c >= TODAY() || task.Status__c == 'Completed', true, false)}" />
                         </apex:column>
+
+                        <apex:column headerValue="{!$ObjectType.APTaskTemplate__c.fields.AssignToType__c.label}">
+                            <apex:outputField value="{!task.AssignToType__c}" />
+                        </apex:column>
+
+
                         <apex:column headerValue="{!$ObjectType.APTaskTemplate__c.fields.User__c.label}" styleClass="assigned_to_field" >
                             <apex:outputField value="{!task.User__c}"  />
                         </apex:column>

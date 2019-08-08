@@ -299,7 +299,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 		                        	</apex:pageBlockSectionItem>
 								</apex:column>
 
-								<apex:column  headerValue="{!$ObjectType.APTTaskTemplate__c.fields.DueDateRelation__c.label}">
+								<apex:column  headerValue="{!$ObjectType.APTaskTemplate__c.fields.DueDateRelation__c.label}">
 									<apex:inputField required="true" value="{!wrapTask.task.DueDateRelation__c}" />
 								</apex:column>
 
@@ -334,15 +334,15 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 		            				<div style="display:none"><apex:inputField id="activityDate" value="{!wrapTask.task.ActivityDate__c}"/></div>                   
 		                        </apex:column>
 
-								<apex:column headerValue="{!$ObjectType.APTTaskTemplate__c.fields.RelatedDateField__c.label}">
+								<apex:column headerValue="{!$ObjectType.APTaskTemplate__c.fields.RelatedDateField__c.label}">
 									<apex:inputField required="false" value="{!wrapTask.task.RelatedDateField__c}" />
 								</apex:column>
 
-								<apex:column headerValue="{!$ObjectType.APTTaskTemplate__c.fields.CreateTaskWhen__c.label}">
+								<apex:column headerValue="{!$ObjectType.APTaskTemplate__c.fields.CreateTaskWhen__c.label}">
 									<apex:inputField required="false" value="{!wrapTask.task.CreateTaskWhen__c}" />
 								</apex:column>
 
-								<apex:column headerValue="{!$ObjectType.APTTaskTemplate__c.fields.AssignToType__c.label}">
+								<apex:column headerValue="{!$ObjectType.APTaskTemplate__c.fields.AssignToType__c.label}">
 									<apex:inputField required="false" value="{!wrapTask.task.AssignToType__c}" />
 								</apex:column>
 

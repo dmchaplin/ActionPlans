@@ -125,7 +125,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 		                        </apex:column>
 
 								<apex:column  headerValue="{!$ObjectType.APTTaskTemplate__c.fields.DueDateRelation__c.label}">
-									<apex:inputField required="false" value="{!wrapTask.task.DueDateRelation__c}" />
+									<apex:inputField required="true" value="{!wrapTask.task.DueDateRelation__c}" />
 								</apex:column>
 
 		                        <apex:column headerValue="{!$ObjectType.APTTaskTemplate__c.fields.APTTaskTemplate__c.label}" rendered="{!IF(TemplateTaskSize > 1, true, false)}">
