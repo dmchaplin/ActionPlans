@@ -1018,7 +1018,8 @@ public with sharing class ActionPlansUtilities{
   		myList = [ select a.Type__c, a.Subject__c, a.ActivityDate__c, a.Priority__c, a.Status__c, a.Dependent__c, 
                     a.Name, a.User__c, a.User__r.Name, a.Id, a.DaysFromStart__c, a.CreatedById, a.APTaskTemplate__r.Name, 
                     a.APTaskTemplate__r.Subject__c, a.APTaskTemplate__c, a.Action_Plan__c, a.Reminder__c,
-                    a.SendEmail__c, a.Comments__c, a.Minutes_Reminder__c , a.taskIndex__c, a.Time_Reminder__c
+                    a.SendEmail__c, a.Comments__c, a.Minutes_Reminder__c , a.taskIndex__c, a.Time_Reminder__c,
+               		a.DueDateRelation__c, a.RelatedDatefield__c, a.CreateTaskWhen__c, a.AssignToType__c
                     from APTaskTemplate__c a 
                     where a.Action_Plan__c =: actionPlanId order by a.taskIndex__c asc ];
   		return myList;

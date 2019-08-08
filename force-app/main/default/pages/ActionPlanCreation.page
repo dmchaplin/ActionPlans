@@ -297,7 +297,11 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 		                        	<apex:pageBlockSectionItem >
 		                        		<apex:inputField required="true" value="{!wrapTask.task.Subject__c}" styleClass="task_input_short" />
 		                        	</apex:pageBlockSectionItem>
-		                        </apex:column>
+								</apex:column>
+
+								<apex:column  headerValue="{!$ObjectType.APTTaskTemplate__c.fields.DueDateRelation__c.label}">
+									<apex:inputField required="true" value="{!wrapTask.task.DueDateRelation__c}" />
+								</apex:column>
 
 		                        <!--  Tasks depending status  -->		                        
 		                        <apex:column headerValue="{!$ObjectType.APTaskTemplate__c.fields.APTaskTemplate__c.label}" rendered="{!IF(TaskSize > 1, true, false)}"   headerClass="thirdN" >
@@ -329,7 +333,19 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 		                       		</div-->
 		            				<div style="display:none"><apex:inputField id="activityDate" value="{!wrapTask.task.ActivityDate__c}"/></div>                   
 		                        </apex:column>
-		                   
+
+								<apex:column headerValue="{!$ObjectType.APTTaskTemplate__c.fields.RelatedDateField__c.label}">
+									<apex:inputField required="false" value="{!wrapTask.task.RelatedDateField__c}" />
+								</apex:column>
+
+								<apex:column headerValue="{!$ObjectType.APTTaskTemplate__c.fields.CreateTaskWhen__c.label}">
+									<apex:inputField required="false" value="{!wrapTask.task.CreateTaskWhen__c}" />
+								</apex:column>
+
+								<apex:column headerValue="{!$ObjectType.APTTaskTemplate__c.fields.AssignToType__c.label}">
+									<apex:inputField required="false" value="{!wrapTask.task.AssignToType__c}" />
+								</apex:column>
+
 		                        <!--  Tasks Assigned TO  -->			                        
 								<apex:column headerValue="{!$ObjectType.APTaskTemplate__c.fields.User__c.label}"  headerClass="fifthN" >
 									<apex:outputPanel id="ownerRecordPanel" style="">
