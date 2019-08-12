@@ -34,12 +34,12 @@ public with sharing class ActionPlansUtilities{
     
     public Double					taskIndexOrder { get; set; }
     public ActionPlanTemplate__c    actionPlanTemplate;
-    public List<APTTaskTemplate__c> aptTasks;
+    public List<ActionPlanTemplateTask__c> aptTasks;
     public ActionPlan__c            actionPlan;
     public List<APTaskTemplate__c>  apTasks;
     public List<APTaskTemplate__c>  apTasksOrg ;
     public String                   errorMsg;
-    public List<APTTaskTemplate__c> pendingTemplateDeletes;
+    public List<ActionPlanTemplateTask__c> pendingTemplateDeletes;
     public List<APTaskTemplate__c>  pendingDeletes;
     public Integer                  taskLimit;
     public List<String>             relatedObjIds;
@@ -527,14 +527,14 @@ public with sharing class ActionPlansUtilities{
                 aptTasks = [ select a.Type__c, a.Subject__c, a.Priority__c, a.Dependent__c, a.Name, a.User__c, a.User__r.Name, a.Id, 
                                 a.DaysFromStart__c, a.CreatedById, a.Action_Plan_Template__c, a.APTTaskTemplate__r.Subject__c, 
                                 a.Reminder__c, a.SendEmail__c, a.Comments__c, a.taskIndex__c
-                                From APTTaskTemplate__c a
+                                From ActionPlanTemplateTask__c a
                                 where a.Action_Plan_Template__c =: TempApId order by taskIndex__c ASC ];
 
                 this.apTasks = new List<APTaskTemplate__c>();
                 
                 Action_Plans_Settings__c mySettings = this.getCustomSetting();
                 String userId; 
-                for( APTTaskTemplate__c aptTask : aptTasks ){
+                for( ActionPlanTemplateTask__c aptTask : aptTasks ){
                 	//Read de Custom Settings in order to asign the User to that Task
 					if( aptTask.User__c != null ) { 
 						userId = aptTask.User__c ; 

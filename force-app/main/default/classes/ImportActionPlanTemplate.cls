@@ -32,16 +32,16 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 public with sharing class ImportActionPlanTemplate{
 	                 
-	private Map<String, APTTaskTemplate__c> importedTasks;
-	private Map<String, APTTaskTemplate__c> newTasks;
+	private Map<String, ActionPlanTemplateTask__c> importedTasks;
+	private Map<String, ActionPlanTemplateTask__c> newTasks;
 	
 	/**
 	* Constructor
 	*/
 	public ImportActionPlanTemplate(){
 		
-		this.importedTasks 	= new Map<String, APTTaskTemplate__c>();
-		this.newTasks 		= new Map<String, APTTaskTemplate__c>();
+		this.importedTasks 	= new Map<String, ActionPlanTemplateTask__c>();
+		this.newTasks 		= new Map<String, ActionPlanTemplateTask__c>();
 	}
 	
 	/**
@@ -91,7 +91,7 @@ public with sharing class ImportActionPlanTemplate{
 		
 		try{
 			//Finish linking up dependent Tasks and updating those tasks in the system
-			List<APTTaskTemplate__c> updatedTasks = this.setupDependentTasks();
+			List<ActionPlanTemplateTask__c> updatedTasks = this.setupDependentTasks();
 			update updatedTasks;
 		}catch( Exception ex ){
 			throw new ImportException( Label.ap_Errors_ImportingXMLTask  );
@@ -281,7 +281,7 @@ public with sharing class ImportActionPlanTemplate{
 	*/
 	private void parseTemplateTask( Xmlstreamreader reader, String apTemplateId ){
 		
-		APTTaskTemplate__c apTaskAux = new APTTaskTemplate__c();
+		ActionPlanTemplateTask__c apTaskAux = new ActionPlanTemplateTask__c();
 		
 		apTaskAux.Action_Plan_Template__c 	= apTemplateId;
 		String currentTaskOldId				= '';
@@ -312,7 +312,7 @@ public with sharing class ImportActionPlanTemplate{
 				reader.next();
 				String referenceId = getDecodedString( reader );
 				if( referenceId != 'null' ){
-					apTaskAux.APTTaskTemplate__c = referenceId;
+					apTaskAux.ActionPlanTemplateTask__c = referenceId;
 				}
 			}
 			//handle daysFromStart field
@@ -364,9 +364,9 @@ public with sharing class ImportActionPlanTemplate{
 
 		//Add relevant information to Maps for later completing linking between dependent tasks
 		this.importedTasks.put( currentTaskOldId, apTaskAux );
-		//Note: removing APTTaskTemplate__c reference field to be able to insert tasks.
-		APTTaskTemplate__c clonedTask = apTaskAux.clone();
-		clonedTask.APTTaskTemplate__c = null;
+		//Note: removing ActionPlanTemplateTask__c reference field to be able to insert tasks.
+		ActionPlanTemplateTask__c clonedTask = apTaskAux.clone();
+		clonedTask.ActionPlanTemplateTask__c = null;
 		this.newTasks.put( currentTaskOldId, clonedTask );
 	}
 	
@@ -374,26 +374,26 @@ public with sharing class ImportActionPlanTemplate{
 	* Method in charge of re-building dependent tasks for imported Action Plans Template
 	* @return updatedTasks
 	*/
-	private List<APTTaskTemplate__c> setupDependentTasks(){
+	private List<ActionPlanTemplateTask__c> setupDependentTasks(){
 
 		//list for returning updated tasks
-		List<APTTaskTemplate__c> updatedTasks = new List<APTTaskTemplate__c>();
+		List<ActionPlanTemplateTask__c> updatedTasks = new List<ActionPlanTemplateTask__c>();
 		//get all old Ids as keys from recently imported and inserted tasks
 		Set<String> keys = this.newTasks.KeySet();
 		
 		for( String key : keys ){
-			APTTaskTemplate__c auxNewTask = this.newTasks.get( key );
-			APTTaskTemplate__c auxOldTask = this.importedTasks.get( key );
+			ActionPlanTemplateTask__c auxNewTask = this.newTasks.get( key );
+			ActionPlanTemplateTask__c auxOldTask = this.importedTasks.get( key );
 
 			//checks to see if task has a reference to another task
-			if( auxOldTask.APTTaskTemplate__c != null ){
-				if( String.valueOf( auxOldTask.APTTaskTemplate__c ).Length() != 0 ){
-					String auxRefId 				= auxOldTask.APTTaskTemplate__c;
+			if( auxOldTask.ActionPlanTemplateTask__c != null ){
+				if( String.valueOf( auxOldTask.ActionPlanTemplateTask__c ).Length() != 0 ){
+					String auxRefId 				= auxOldTask.ActionPlanTemplateTask__c;
 					//get dependent task
-					APTTaskTemplate__c auxRefTask 	= this.newTasks.get( auxRefId );
+					ActionPlanTemplateTask__c auxRefTask 	= this.newTasks.get( auxRefId );
 					
 					//Update task reference
-					auxNewTask.APTTaskTemplate__c = auxRefTask.Id;
+					auxNewTask.ActionPlanTemplateTask__c = auxRefTask.Id;
 				}
 			}
 			updatedTasks.add( auxNewTask );

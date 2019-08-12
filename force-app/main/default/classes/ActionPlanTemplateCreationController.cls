@@ -118,7 +118,7 @@ public with sharing class ActionPlanTemplateCreationController{
     	
     	if( this.actionPlanTemplates != null ){
     		Integer i = 0;
-    		for( APTTaskTemplate__c aptTaskTemplate : this.actionPlanTemplates.getTemplateTasks() ){
+    		for( ActionPlanTemplateTask__c aptTaskTemplate : this.actionPlanTemplates.getTemplateTasks() ){
     			ApTTaskWrapper = new ApTTaskWrapper( aptTaskTemplate, i );
     			tasksList.add( ApTTaskWrapper );
     			i++;
@@ -174,11 +174,11 @@ public with sharing class ActionPlanTemplateCreationController{
     */
     public Double calculateTaskIndexValue(){
     	
-    	List<APTTaskTemplate__c> aptTasks = [ select id, taskIndex__c from APTTaskTemplate__c 
+    	List<ActionPlanTemplateTask__c> aptTasks = [ select id, taskIndex__c from ActionPlanTemplateTask__c 
     											where Action_Plan_Template__c =: this.actionPlanTemplateId ];
     	
     	Double maxIndex = 0;
-    	for( APTTaskTemplate__c tsk : aptTasks ){
+    	for( ActionPlanTemplateTask__c tsk : aptTasks ){
     		if( tsk.taskIndex__c > maxIndex ){
     			maxIndex = tsk.taskIndex__c;
     		}
@@ -194,11 +194,11 @@ public with sharing class ActionPlanTemplateCreationController{
     */
     public class ApTTaskWrapper{
     	
-    	public APTTaskTemplate__c task 	{ get; set; }
+    	public ActionPlanTemplateTask__c task 	{ get; set; }
 		public 	Integer 	position 	{ get; set; }
     	public 	Boolean 	isLast 		{ get; set; }
     	
-    	public ApTTaskWrapper( APTTaskTemplate__c apTask, Integer pos ){
+    	public ApTTaskWrapper( ActionPlanTemplateTask__c apTask, Integer pos ){
     		task 		= apTask;
     		position 	= pos;
     		isLast 		= false;
@@ -233,7 +233,7 @@ public with sharing class ActionPlanTemplateCreationController{
     	
     	apTemplate.Name = testUtil.createRandomWord();
     	
-    	APTTaskTemplate__c newAPTTask = new APTTaskTemplate__c();
+    	ActionPlanTemplateTask__c newAPTTask = new ActionPlanTemplateTask__c();
  		
  		newAPTTask.Subject__c 			= testUtil.createRandomWord();
  		newAPTTask.DaysFromStart__c 	= 2;
@@ -241,7 +241,7 @@ public with sharing class ActionPlanTemplateCreationController{
  		newAPTTask.Priority__c 			= 'Hight';
  		
 		ActionPlanTemplateCreationController apTemplateController = new ActionPlanTemplateCreationController( new ApexPages.StandardController( apTemplate ) );
-		apTemplateController.actionPlanTemplates.aptTasks = new List<APTTaskTemplate__c>();
+		apTemplateController.actionPlanTemplates.aptTasks = new List<ActionPlanTemplateTask__c>();
 		apTemplateController.actionPlanTemplates.aptTasks.add( newAPTTask );
 		Pagereference page = apTemplateController.saveTemplate();
 		
@@ -353,8 +353,8 @@ public with sharing class ActionPlanTemplateCreationController{
     	ActionPlansTestUtilities testUtil 	= new ActionPlansTestUtilities();
     	ActionPlanTemplate__c apTemplate 	= testUtil.createNewActionPlanTemplate( 2 );
     	
-    	APTTaskTemplate__c newAPTTask 	= new APTTaskTemplate__c();
- 		APTTaskTemplate__c newAPTTask2 	= new APTTaskTemplate__c();
+    	ActionPlanTemplateTask__c newAPTTask 	= new ActionPlanTemplateTask__c();
+ 		ActionPlanTemplateTask__c newAPTTask2 	= new ActionPlanTemplateTask__c();
  		
  		newAPTTask.Subject__c 			= testUtil.createRandomWord();
  		newAPTTask.DaysFromStart__c 	= 2;
@@ -372,7 +372,7 @@ public with sharing class ActionPlanTemplateCreationController{
     	System.currentPageReference().getParameters().put( 'id', apTemplate.Id );
     	ActionPlanTemplateCreationController apTemplateController = new ActionPlanTemplateCreationController( new ApexPages.StandardController( new ActionPlanTemplate__c() ) );
     	
-    	apTemplateController.actionPlanTemplates.aptTasks = new List<APTTaskTemplate__c>();
+    	apTemplateController.actionPlanTemplates.aptTasks = new List<ActionPlanTemplateTask__c>();
 		apTemplateController.actionPlanTemplates.aptTasks.add( newAPTTask );
 
     	apTemplateController.checkCycleDependent();
@@ -389,9 +389,9 @@ public with sharing class ActionPlanTemplateCreationController{
     	ActionPlansTestUtilities testUtil 	= new ActionPlansTestUtilities();
     	ActionPlanTemplate__c apTemplate 	= testUtil.createNewActionPlanTemplate( 2 );
     	
-    	APTTaskTemplate__c newAPTTask 	= new APTTaskTemplate__c();
- 		APTTaskTemplate__c newAPTTask2 	= new APTTaskTemplate__c();
- 		APTTaskTemplate__c newAPTTask3 	= new APTTaskTemplate__c();
+    	ActionPlanTemplateTask__c newAPTTask 	= new ActionPlanTemplateTask__c();
+ 		ActionPlanTemplateTask__c newAPTTask2 	= new ActionPlanTemplateTask__c();
+ 		ActionPlanTemplateTask__c newAPTTask3 	= new ActionPlanTemplateTask__c();
  		
  		newAPTTask.Subject__c 			= testUtil.createRandomWord();
  		newAPTTask.DaysFromStart__c 	= 2;
@@ -415,7 +415,7 @@ public with sharing class ActionPlanTemplateCreationController{
     	System.currentPageReference().getParameters().put( 'id', apTemplate.Id );
     	ActionPlanTemplateCreationController apTemplateController = new ActionPlanTemplateCreationController( new ApexPages.StandardController( new ActionPlanTemplate__c() ) );
     	
-    	apTemplateController.actionPlanTemplates.aptTasks = new List<APTTaskTemplate__c>();
+    	apTemplateController.actionPlanTemplates.aptTasks = new List<ActionPlanTemplateTask__c>();
 		apTemplateController.actionPlanTemplates.aptTasks.add( newAPTTask );
 		apTemplateController.actionPlanTemplates.aptTasks.add( newAPTTask2 );
 		apTemplateController.actionPlanTemplates.aptTasks.add( newAPTTask3 );

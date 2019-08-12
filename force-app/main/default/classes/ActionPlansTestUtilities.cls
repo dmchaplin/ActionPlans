@@ -38,11 +38,11 @@ public with sharing class ActionPlansTestUtilities{
  	public ActionPlan__c 		 tAP		{ get; set; }
  	public APTaskTemplate__c	 tAPTask	{ get; set; }
  	public ActionPlanTemplate__c tAPT		{ get; set; }
- 	public APTTaskTemplate__c	 tAPTTask	{ get; set; }
+ 	public ActionPlanTemplateTask__c	 tAPTTask	{ get; set; }
  	
  	//Lists
  	public List<APTaskTemplate__c>	tAPTList	{ get; set; }
- 	public List<APTTaskTemplate__c>	tAPTTList	{ get; set; }
+ 	public List<ActionPlanTemplateTask__c>	tAPTTList	{ get; set; }
  	public List<Task>				tTaskList	{ get; set; }
  	
  	public User			tUser { get; set; }
@@ -361,7 +361,7 @@ public with sharing class ActionPlansTestUtilities{
  			System.assert( false ,' Inserting Action Plan Template failed,' + ex );
  		}
  		
- 		APTTaskTemplate__c auxTask = new APTTaskTemplate__c();
+ 		ActionPlanTemplateTask__c auxTask = new ActionPlanTemplateTask__c();
  		//Creates default tasks for Action Plan
  		for( Integer i = 0; i < numTasks; i++ ){
  			auxTask = this.createNewActionPlanTemplateTask( apTemplate, 1, null, 'Email', 'High' );
@@ -374,9 +374,9 @@ public with sharing class ActionPlansTestUtilities{
  	* Create Action Plan Template Task
  	* @return newAPTTask
  	*/
-    public APTTaskTemplate__c createNewActionPlanTemplateTask( ActionPlanTemplate__c apTemplate, Integer days, User user, String category, String priority ){
+    public ActionPlanTemplateTask__c createNewActionPlanTemplateTask( ActionPlanTemplate__c apTemplate, Integer days, User user, String category, String priority ){
  		
- 		APTTaskTemplate__c newAPTTask = new APTTaskTemplate__c();
+ 		ActionPlanTemplateTask__c newAPTTask = new ActionPlanTemplateTask__c();
  		
  		newAPTTask.Action_Plan_Template__c 	= apTemplate.Id;
  		newAPTTask.Subject__c 				= this.createRandomWord();

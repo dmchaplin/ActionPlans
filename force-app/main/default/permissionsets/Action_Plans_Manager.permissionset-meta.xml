@@ -118,77 +118,77 @@
     </classAccesses>
     <fieldPermissions>
         <editable>true</editable>
-        <field>APTTaskTemplate__c.APTTaskTemplate__c</field>
+        <field>ActionPlanTemplateTask__c.ActionPlanTemplateTask__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>APTTaskTemplate__c.AssignToType__c</field>
+        <field>ActionPlanTemplateTask__c.AssignToType__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>APTTaskTemplate__c.Comments__c</field>
+        <field>ActionPlanTemplateTask__c.Comments__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>APTTaskTemplate__c.CreateTaskWhen__c</field>
+        <field>ActionPlanTemplateTask__c.CreateTaskWhen__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>APTTaskTemplate__c.Dependent__c</field>
+        <field>ActionPlanTemplateTask__c.Dependent__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>APTTaskTemplate__c.DueDateRelation__c</field>
+        <field>ActionPlanTemplateTask__c.DueDateRelation__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>APTTaskTemplate__c.Minutes_Reminder__c</field>
+        <field>ActionPlanTemplateTask__c.Minutes_Reminder__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>APTTaskTemplate__c.Priority__c</field>
+        <field>ActionPlanTemplateTask__c.Priority__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>APTTaskTemplate__c.RelatedDateField__c</field>
+        <field>ActionPlanTemplateTask__c.RelatedDateField__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>APTTaskTemplate__c.Reminder__c</field>
+        <field>ActionPlanTemplateTask__c.Reminder__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>APTTaskTemplate__c.SendEmail__c</field>
+        <field>ActionPlanTemplateTask__c.SendEmail__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>APTTaskTemplate__c.Time_Reminder__c</field>
+        <field>ActionPlanTemplateTask__c.Time_Reminder__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>APTTaskTemplate__c.Type__c</field>
+        <field>ActionPlanTemplateTask__c.Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>APTTaskTemplate__c.User__c</field>
+        <field>ActionPlanTemplateTask__c.User__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>APTTaskTemplate__c.taskIndex__c</field>
+        <field>ActionPlanTemplateTask__c.taskIndex__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -400,7 +400,7 @@
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
-        <object>APTTaskTemplate__c</object>
+        <object>ActionPlanTemplateTask__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>

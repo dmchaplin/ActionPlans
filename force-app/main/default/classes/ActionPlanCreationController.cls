@@ -510,11 +510,11 @@ public with sharing class ActionPlanCreationController{
     */
     public Double calculateAPTTaskIndexValue(){
         
-        List<APTTaskTemplate__c> aptTasks = [ select id, taskIndex__c from APTTaskTemplate__c 
+        List<ActionPlanTemplateTask__c> aptTasks = [ select id, taskIndex__c from ActionPlanTemplateTask__c 
                                                 where Action_Plan_Template__c =: this.templateId ];
         
         Double maxIndex = 0;
-        for( APTTaskTemplate__c tsk : aptTasks ){
+        for( ActionPlanTemplateTask__c tsk : aptTasks ){
             if( tsk.taskIndex__c > maxIndex ){
                 maxIndex = tsk.taskIndex__c;
             }

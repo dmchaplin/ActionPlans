@@ -99,13 +99,13 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
                 
                 <apex:dataTable value="{!TemplateTasks}" var="task" id="theTable" styleClass="sortable noBump">
 					<apex:column >&nbsp;</apex:column>
-                    <apex:column id="columnOne" headerValue="{!$ObjectType.APTTaskTemplate__c.fields.Subject__c.label}" value="{!task.Subject__c}" />
-                    <apex:column headerValue="{!$ObjectType.APTTaskTemplate__c.fields.APTTaskTemplate__c.label}" value="{!task.APTTaskTemplate__r.Subject__c}"   />
+                    <apex:column id="columnOne" headerValue="{!$ObjectType.ActionPlanTemplateTask__c.fields.Subject__c.label}" value="{!task.Subject__c}" />
+                    <apex:column headerValue="{!$ObjectType.ActionPlanTemplateTask__c.fields.ActionPlanTemplateTask__c.label}" value="{!task.APTTaskTemplate__r.Subject__c}"   />
 
-					<apex:column value="{!task.DueDateRelation__c}" headerValue="{!$ObjectType.APTTaskTemplate__c.fields.DueDateRelation__c.label}" / >
+					<apex:column value="{!task.DueDateRelation__c}" headerValue="{!$ObjectType.ActionPlanTemplateTask__c.fields.DueDateRelation__c.label}" / >
 
                     <apex:column value="{!task.DaysFromStart__c}" >
-                    	<apex:facet name="header">{!$ObjectType.APTTaskTemplate__c.fields.DaysFromStart__c.label}
+                    	<apex:facet name="header">{!$ObjectType.ActionPlanTemplateTask__c.fields.DaysFromStart__c.label}
 							<span id="daysAfterTtip_help" class="helpButton">
 								<img class="helpOrb" title="{!$Label.ap_days_after_msg}" src="/s.gif"/>
 							</span>
@@ -114,16 +114,16 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 
         
                     
-                    <apex:column headerValue="{!$ObjectType.APTTaskTemplate__c.fields.RelatedDateField__c.label}">
+                    <apex:column headerValue="{!$ObjectType.ActionPlanTemplateTask__c.fields.RelatedDateField__c.label}">
                         <apex:outputField value="{!task.RelatedDateField__c}" />
                     </apex:column>
 
-                    <apex:column headerValue="{!$ObjectType.APTTaskTemplate__c.fields.CreateTaskWhen__c.label}">
+                    <apex:column headerValue="{!$ObjectType.ActionPlanTemplateTask__c.fields.CreateTaskWhen__c.label}">
                         <apex:outputField  value="{!task.CreateTaskWhen__c}" />
                     </apex:column>
 
 
-                    <apex:column headerValue="{!$ObjectType.APTTaskTemplate__c.fields.AssignToType__c.label}">
+                    <apex:column headerValue="{!$ObjectType.ActionPlanTemplateTask__c.fields.AssignToType__c.label}">
                         <apex:outputField value="{!task.AssignToType__c}" />
                     </apex:column>
 
@@ -133,15 +133,15 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
                     	<apex:outputField value="{!task.User__c}"  />
                     </apex:column>
                     
-                    <apex:column headerValue="{!$ObjectType.APTTaskTemplate__c.fields.Type__c.label}" value="{!task.Type__c}" />
-                    <apex:column headerValue="{!$ObjectType.APTTaskTemplate__c.fields.Priority__c.label}" value="{!task.Priority__c}" />
-                    <apex:column headerValue="{!$ObjectType.APTTaskTemplate__c.fields.SendEmail__c.label}" value="{!task.SendEmail__c}" />
-                    <apex:column headerValue="{!$ObjectType.APTTaskTemplate__c.fields.Reminder__c.label}" >
+                    <apex:column headerValue="{!$ObjectType.ActionPlanTemplateTask__c.fields.Type__c.label}" value="{!task.Type__c}" />
+                    <apex:column headerValue="{!$ObjectType.ActionPlanTemplateTask__c.fields.Priority__c.label}" value="{!task.Priority__c}" />
+                    <apex:column headerValue="{!$ObjectType.ActionPlanTemplateTask__c.fields.SendEmail__c.label}" value="{!task.SendEmail__c}" />
+                    <apex:column headerValue="{!$ObjectType.ActionPlanTemplateTask__c.fields.Reminder__c.label}" >
                     	<apex:outputPanel layout="block" >
                     		<apex:outputField value="{!task.Reminder__c}"/>
 						</apex:outputPanel>
                     </apex:column>
-					<apex:column headerValue="{!$ObjectType.APTTaskTemplate__c.fields.Comments__c.label}">
+					<apex:column headerValue="{!$ObjectType.ActionPlanTemplateTask__c.fields.Comments__c.label}">
 						<apex:outputPanel id="commentPanel" style="display:none">
                         		<div id="commentContainer" onmouseout="javascript:ActionPlanTemplateDetailScripts.hideComments('{!$Component.theTable.columnOne}');">
 	                        		<div class="hd">

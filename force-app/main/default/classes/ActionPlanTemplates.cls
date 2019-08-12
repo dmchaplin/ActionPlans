@@ -34,9 +34,9 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
  	
  	public Double							taskIndexOrder			{ get; set; }
     public ActionPlanTemplate__c    		actionPlanTemplate;
-    public List<APTTaskTemplate__c> 		pendingTemplateDeletes;
-    public List<APTTaskTemplate__c> 		aptTasks;
-    public Map<String, APTTaskTemplate__c> 	taskMap 				{ get; set; }
+    public List<ActionPlanTemplateTask__c> 		pendingTemplateDeletes;
+    public List<ActionPlanTemplateTask__c> 		aptTasks;
+    public Map<String, ActionPlanTemplateTask__c> 	taskMap 				{ get; set; }
     public Integer                  		taskLimit;
     public String                   		errorMsg;
     
@@ -45,7 +45,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
     * @param actionPT
     */
     public ActionPlanTemplates( ActionPlanTemplate__c actionPT ){
-    	this.taskMap			= new Map<String, APTTaskTemplate__c>();
+    	this.taskMap			= new Map<String, ActionPlanTemplateTask__c>();
     	this.errorMsg			= null;
         this.taskLimit  		= 75;
         this.actionPlanTemplate = actionPT;
@@ -108,7 +108,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
     	
         // check for pendingDeletes, if something is pending send it to delete
         if( pendingTemplateDeletes != null ){
-        	List<APTTaskTemplate__c> toDelete = new List<APTTaskTemplate__c>();
+        	List<ActionPlanTemplateTask__c> toDelete = new List<ActionPlanTemplateTask__c>();
         	toDelete.addAll( pendingTemplateDeletes );
         	delete toDelete;
         }
@@ -122,7 +122,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
         }
         
         // save tasks to the template and attach relation to Action Plan
-        for( APTTaskTemplate__c t : aptTasks ){
+        for( ActionPlanTemplateTask__c t : aptTasks ){
             if( t.Action_Plan_Template__c == null ){
             	t.Action_Plan_Template__c = apt.Id;
             } 
@@ -140,13 +140,13 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
         }
         
         // run through the tasks and take care of dependents
-        for( APTTaskTemplate__c t : aptTasks ){
+        for( ActionPlanTemplateTask__c t : aptTasks ){
             if( t.Dependent__c != 'None' && t.Dependent__c != null ){
                 Integer tempIndex 		= Integer.valueOf( t.Dependent__c );
-                t.APTTaskTemplate__c 	= aptTasks[ tempIndex ].Id;
+                t.ActionPlanTemplateTask__c 	= aptTasks[ tempIndex ].Id;
             }
             else{
-            	t.APTTaskTemplate__c = null;
+            	t.ActionPlanTemplateTask__c = null;
             }
         }
         
@@ -208,34 +208,34 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
     * Get all tasks related to the Action Template.
     * @return aptTasks
     */
-    public List<APTTaskTemplate__c> getTemplateTasks(){
+    public List<ActionPlanTemplateTask__c> getTemplateTasks(){
     	
         if( aptTasks == null || aptTasks.size() == 0 ){
             String TempApId = ApexPages.currentPage().getParameters().get('Id');
             
             if( TempApId != null ) {
                 aptTasks = [ select a.Type__c, a.Subject__c, a.Priority__c, a.Dependent__c, a.Name, a.User__c, taskIndex__c,
-            				 a.User__r.Name, a.Id, a.DaysFromStart__c, a.CreatedById, a.Action_Plan_Template__c, a.APTTaskTemplate__c,
+            				 a.User__r.Name, a.Id, a.DaysFromStart__c, a.CreatedById, a.Action_Plan_Template__c, a.ActionPlanTemplateTask__c,
             				 a.APTTaskTemplate__r.Subject__c, a.Reminder__c, a.SendEmail__c, a.Comments__c,
 							 a.DueDateRelation__c, a.RelatedDatefield__c, a.CreateTaskWhen__c, a.AssignToType__c
-            				 From APTTaskTemplate__c a 
+            				 From ActionPlanTemplateTask__c a 
             				 where a.Action_Plan_Template__c =: TempApId  order by taskIndex__c ASC ];
             }
             else {
-                aptTasks 				= new List<APTTaskTemplate__c>();
-                APTTaskTemplate__c t 	= new APTTaskTemplate__c();
+                aptTasks 				= new List<ActionPlanTemplateTask__c>();
+                ActionPlanTemplateTask__c t 	= new ActionPlanTemplateTask__c();
                 t.Reminder__c	 		= false;
                 aptTasks.add( t );
             }
             
             // clone and clear Ids
             if( ApexPages.currentPage().getParameters().get( 'clone' ) == '1' ){
-                List<APTTaskTemplate__c> tC = aptTasks.deepClone( false );
+                List<ActionPlanTemplateTask__c> tC = aptTasks.deepClone( false );
                 aptTasks.clear();
                 aptTasks = tC;
                 
                 // clear lookup relationship also
-                for( APTTaskTemplate__c t : aptTasks ){
+                for( ActionPlanTemplateTask__c t : aptTasks ){
                     if( t.Action_Plan_Template__c != null ){
                     	 t.Action_Plan_Template__c = null;
                     }
@@ -243,7 +243,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
             }
         }     
         
-        return ( aptTasks.isEmpty() ) ? new List<APTTaskTemplate__c>() : aptTasks ;
+        return ( aptTasks.isEmpty() ) ? new List<ActionPlanTemplateTask__c>() : aptTasks ;
     }
     
     /** 
@@ -260,13 +260,13 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
                 this.errorMsg = Label.ap_Errors_TaskLimitError;
             } 
             else{
-                APTTaskTemplate__c t = new APTTaskTemplate__c();
+                ActionPlanTemplateTask__c t = new ActionPlanTemplateTask__c();
                 t.Reminder__c 	= false;
                 t.taskIndex__c 	= this.taskIndexOrder;
                 
                 // validate user, priority, subject and days before adding another
                 hasNoErrors = true;
-                for( APTTaskTemplate__c apt : aptTasks ){
+                for( ActionPlanTemplateTask__c apt : aptTasks ){
                 	hasNoErrors = ( apt.Priority__c != null && apt.Subject__c != null );
                 	if( apt.DaysFromStart__c < 1 ) {
 	                	apt.DaysFromStart__c = 1;
@@ -286,7 +286,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
     }
     
     /** 
-    * Remove a specific index in the List<APTTaskTemplate__c>.
+    * Remove a specific index in the List<ActionPlanTemplateTask__c>.
     */
     public Boolean removeTemplateTask(){
     	
@@ -294,10 +294,10 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
         if( ApexPages.currentPage().getParameters().get( 'remove' ) != null ){
             Integer taskIndex       = Integer.valueOf( ApexPages.currentPage().getParameters().get( 'remove' ) );
             
-            APTTaskTemplate__c aptTask;
+            ActionPlanTemplateTask__c aptTask;
             
             //check for dependent children and clear them since the parent is being removed.
-            aptTasks[ taskIndex ].APTTaskTemplate__c    = null;
+            aptTasks[ taskIndex ].ActionPlanTemplateTask__c    = null;
             aptTasks[ taskIndex ].Dependent__c         	= null;
             
             Integer dependentApTask;
@@ -311,7 +311,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
             			aptTask.Dependent__c = String.valueOf( dependentApTask - 1 );	
             		}else if( dependentApTask == taskIndex ){
             			aptTask.Dependent__c = 'None';
-            			aptTask.APTTaskTemplate__c    = null;
+            			aptTask.ActionPlanTemplateTask__c    = null;
             		}
             	}
             }
@@ -319,7 +319,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
             // before remove check if it's exists in the DB, if so, add to pendingTemplateDeletes to be deleted on save.
             if( this.aptTasks[taskIndex].Id != null ){
                 if( pendingTemplateDeletes == null ){
-                	 pendingTemplateDeletes = new List<APTTaskTemplate__c>();
+                	 pendingTemplateDeletes = new List<ActionPlanTemplateTask__c>();
                 }
                 pendingTemplateDeletes.add( aptTasks[ taskIndex ] );
             }
@@ -353,7 +353,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
         integer i = 0;
         
         if( this.aptTasks != null ){
-            for( APTTaskTemplate__c t : this.aptTasks ){
+            for( ActionPlanTemplateTask__c t : this.aptTasks ){
                  if( t.Subject__c != null ){
                 	 options.add( new SelectOption( string.valueOf( i ), t.Subject__c+' ('+ ( i + 1 ) +')' ) );
                 }
@@ -374,10 +374,10 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
     	Boolean exists 	= false;
     	Integer index 	= 0;
         
-        for( APTTaskTemplate__c t : this.aptTasks ){
+        for( ActionPlanTemplateTask__c t : this.aptTasks ){
             if( t.Dependent__c != 'None' && t.Dependent__c != null ){
                 Integer tempIndex   	= Integer.valueOf( t.Dependent__c );
-                APTTaskTemplate__c link = this.aptTasks[tempIndex];
+                ActionPlanTemplateTask__c link = this.aptTasks[tempIndex];
                 
                 //task can not depend on themselves
                 if(tempIndex == index){
@@ -402,7 +402,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
     * @param index
     * @return Boolean
     */
-	private Boolean dependantCycle( APTTaskTemplate__c originTask, APTTaskTemplate__c destinyTask, Integer index ){
+	private Boolean dependantCycle( ActionPlanTemplateTask__c originTask, ActionPlanTemplateTask__c destinyTask, Integer index ){
 		
         Boolean hasDependency = false;
         Set<Integer> visitedTasks = new Set<Integer>();
@@ -420,7 +420,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
         	
 			if( destinyTask.Dependent__c != 'None' && destinyTask.Dependent__c != null  ){
 				Integer tempIndexDestiny 	= Integer.valueOf( destinyTask.Dependent__c );
-				APTTaskTemplate__c link 		= this.aptTasks[ tempIndexDestiny ];
+				ActionPlanTemplateTask__c link 		= this.aptTasks[ tempIndexDestiny ];
 	
 				if( link.Dependent__c != 'None' ){
 					if( Integer.valueOf( link.Dependent__c ) == index ){
@@ -587,7 +587,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 		ActionPlanTemplates apTemplate = new ActionPlanTemplates( actionPlanTemplate );
 		
 		apTemplate.actionPlanTemplate 			= actionPlanTemplate;
-		List<APTTaskTemplate__c> templateTasks 	= apTemplate.getTemplateTasks();
+		List<ActionPlanTemplateTask__c> templateTasks 	= apTemplate.getTemplateTasks();
 		
 		System.assert( !templateTasks.isEmpty(), 'template task list is empty');
 		System.assert( templateTasks.size() == 3, 'template tasks size not correct' );
@@ -596,7 +596,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 		apTemplate = new ActionPlanTemplates( actionPlanTemplate );
 		
 		apTemplate.actionPlanTemplate 				= actionPlanTemplate;
-		List<APTTaskTemplate__c> templateTasks2 	= apTemplate.getTemplateTasks();
+		List<ActionPlanTemplateTask__c> templateTasks2 	= apTemplate.getTemplateTasks();
 		
 		System.assert( !templateTasks2.isEmpty(), 'template task list is empty');
 		System.assert( templateTasks2.size() == 1, 'template tasks size not correct' );
@@ -605,7 +605,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 		apTemplate = new ActionPlanTemplates( actionPlanTemplate );
 		
 		apTemplate.actionPlanTemplate 				= actionPlanTemplate;
-		List<APTTaskTemplate__c> templateTasks3 	= apTemplate.getTemplateTasks();
+		List<ActionPlanTemplateTask__c> templateTasks3 	= apTemplate.getTemplateTasks();
 		
 		Test.StopTest();
 	}
@@ -622,11 +622,11 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 		
 		System.currentPageReference().getParameters().put( 'add', '1') ;
 		ActionPlanTemplates apTemplate = new ActionPlanTemplates( actionPlanTemplate );
-		apTemplate.aptTasks = new List<APTTaskTemplate__c>();
+		apTemplate.aptTasks = new List<ActionPlanTemplateTask__c>();
 		apTemplate.aptTasks = [ select a.Type__c, a.Subject__c, a.Priority__c, a.Dependent__c, a.Name, a.User__c,
                 				 a.User__r.Name, a.Id, a.DaysFromStart__c, a.CreatedById, a.Action_Plan_Template__c, 
                 				 a.APTTaskTemplate__r.Subject__c, a.Reminder__c, a.SendEmail__c, a.Comments__c 
-                				 From APTTaskTemplate__c a 
+                				 From ActionPlanTemplateTask__c a 
                 				 where a.Action_Plan_Template__c =: actionPlanTemplate.Id ];
 		
 		Boolean error = apTemplate.addTemplateTask();
@@ -637,11 +637,11 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 		
 		System.currentPageReference().getParameters().put( 'add', '1') ;
 		apTemplate 			= new ActionPlanTemplates( actionPlanTemplate );
-		apTemplate.aptTasks = new List<APTTaskTemplate__c>();
+		apTemplate.aptTasks = new List<ActionPlanTemplateTask__c>();
 		apTemplate.aptTasks = [ select a.Type__c, a.Subject__c, a.Priority__c, a.Dependent__c, a.Name, a.User__c,
                 				 a.User__r.Name, a.Id, a.DaysFromStart__c, a.CreatedById, a.Action_Plan_Template__c, 
                 				 a.APTTaskTemplate__r.Subject__c, a.Reminder__c, a.SendEmail__c, a.Comments__c 
-                				 From APTTaskTemplate__c a 
+                				 From ActionPlanTemplateTask__c a 
                 				 where a.Action_Plan_Template__c =: actionPlanTemplate2.Id ];
 		
 		error = apTemplate.addTemplateTask();
@@ -664,11 +664,11 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 		System.currentPageReference().getParameters().put( 'remove', '1') ;
 		ActionPlanTemplates apTemplate = new ActionPlanTemplates( actionPlanTemplate );
 		
-		apTemplate.aptTasks = new List<APTTaskTemplate__c>();
+		apTemplate.aptTasks = new List<ActionPlanTemplateTask__c>();
 		apTemplate.aptTasks = [ select a.Type__c, a.Subject__c, a.Priority__c, a.Dependent__c, a.Name, a.User__c,
                 				 a.User__r.Name, a.Id, a.DaysFromStart__c, a.CreatedById, a.Action_Plan_Template__c, 
                 				 a.APTTaskTemplate__r.Subject__c, a.Reminder__c, a.SendEmail__c, a.Comments__c 
-                				 From APTTaskTemplate__c a 
+                				 From ActionPlanTemplateTask__c a 
                 				 where a.Action_Plan_Template__c =: actionPlanTemplate.Id ];
 		
 		apTemplate.removeTemplateTask();
@@ -690,14 +690,14 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 		
 		ActionPlanTemplates apTemplate = new ActionPlanTemplates( actionPlanTemplate );
 		
-		apTemplate.aptTasks = new List<APTTaskTemplate__c>();
+		apTemplate.aptTasks = new List<ActionPlanTemplateTask__c>();
 		apTemplate.aptTasks = [ select a.Type__c, a.Subject__c, a.Priority__c, a.Dependent__c, a.Name, a.User__c,
                 				 a.User__r.Name, a.Id, a.DaysFromStart__c, a.CreatedById, a.Action_Plan_Template__c, 
                 				 a.APTTaskTemplate__r.Subject__c, a.Reminder__c, a.SendEmail__c, a.Comments__c 
-                				 From APTTaskTemplate__c a 
+                				 From ActionPlanTemplateTask__c a 
                 				 where a.Action_Plan_Template__c =: actionPlanTemplate.Id ];
                 				 
-		List<APTTaskTemplate__c> apTemplateTasks = apTemplate.getTemplateTasks();
+		List<ActionPlanTemplateTask__c> apTemplateTasks = apTemplate.getTemplateTasks();
 		
 		System.assert( apTemplateTasks.size() == 4, 'Incorrect size returned' );
 		
@@ -716,14 +716,14 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 		
 		ActionPlanTemplates apTemplate = new ActionPlanTemplates( actionPlanTemplate );
 		
-		apTemplate.aptTasks = new List<APTTaskTemplate__c>();
+		apTemplate.aptTasks = new List<ActionPlanTemplateTask__c>();
 		apTemplate.aptTasks = [ select a.Type__c, a.Subject__c, a.Priority__c, a.Dependent__c, a.Name, a.User__c,
                 				 a.User__r.Name, a.Id, a.DaysFromStart__c, a.CreatedById, a.Action_Plan_Template__c, 
                 				 a.APTTaskTemplate__r.Subject__c, a.Reminder__c, a.SendEmail__c, a.Comments__c 
-                				 From APTTaskTemplate__c a 
+                				 From ActionPlanTemplateTask__c a 
                 				 where a.Action_Plan_Template__c =: actionPlanTemplate.Id ];
                 				 
-		List<APTTaskTemplate__c> apTemplateTasks 	= apTemplate.getTemplateTasks();
+		List<ActionPlanTemplateTask__c> apTemplateTasks 	= apTemplate.getTemplateTasks();
 		Integer numTasks 							= apTemplate.getTemplateTaskSize();
 		
 		System.assert( apTemplateTasks.size() == numTasks, 'Incorrect size returned' );
@@ -743,11 +743,11 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 		
 		ActionPlanTemplates apTemplate = new ActionPlanTemplates( actionPlanTemplate );
 		
-		apTemplate.aptTasks = new List<APTTaskTemplate__c>();
+		apTemplate.aptTasks = new List<ActionPlanTemplateTask__c>();
 		apTemplate.aptTasks = [ select a.Type__c, a.Subject__c, a.Priority__c, a.Dependent__c, a.Name, a.User__c,
                 				 a.User__r.Name, a.Id, a.DaysFromStart__c, a.CreatedById, a.Action_Plan_Template__c, 
                 				 a.APTTaskTemplate__r.Subject__c, a.Reminder__c, a.SendEmail__c, a.Comments__c 
-                				 From APTTaskTemplate__c a 
+                				 From ActionPlanTemplateTask__c a 
                 				 where a.Action_Plan_Template__c =: actionPlanTemplate.Id ];
 		
 		List<Selectoption> options = apTemplate.getTemplateSubjectItems();
@@ -769,8 +769,8 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 		
 		ActionPlanTemplates apTemplate = new ActionPlanTemplates( actionPlanTemplate );
 		
-		APTTaskTemplate__c newAPTTask 	= new APTTaskTemplate__c();
- 		APTTaskTemplate__c newAPTTask2 	= new APTTaskTemplate__c();
+		ActionPlanTemplateTask__c newAPTTask 	= new ActionPlanTemplateTask__c();
+ 		ActionPlanTemplateTask__c newAPTTask2 	= new ActionPlanTemplateTask__c();
  		
  		newAPTTask.Subject__c 			= testUtil.createRandomWord();
  		newAPTTask.DaysFromStart__c 	= 2;
@@ -784,7 +784,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
  		newAPTTask2.Type__c 			= 'Email';
  		newAPTTask2.Priority__c 		= 'High';
  		
-		apTemplate.aptTasks = new List<APTTaskTemplate__c>();
+		apTemplate.aptTasks = new List<ActionPlanTemplateTask__c>();
 		apTemplate.aptTasks.add( newAPTTask );
 		apTemplate.aptTasks.add( newAPTTask2 );		
                 				 
@@ -807,9 +807,9 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 		
 		ActionPlanTemplates apTemplate = new ActionPlanTemplates( actionPlanTemplate );
 		
-		APTTaskTemplate__c newAPTTask 	= new APTTaskTemplate__c();
- 		APTTaskTemplate__c newAPTTask2 	= new APTTaskTemplate__c();
- 		APTTaskTemplate__c newAPTTask3 	= new APTTaskTemplate__c();
+		ActionPlanTemplateTask__c newAPTTask 	= new ActionPlanTemplateTask__c();
+ 		ActionPlanTemplateTask__c newAPTTask2 	= new ActionPlanTemplateTask__c();
+ 		ActionPlanTemplateTask__c newAPTTask3 	= new ActionPlanTemplateTask__c();
  		
  		newAPTTask.Subject__c 			= testUtil.createRandomWord();
  		newAPTTask.DaysFromStart__c 	= 2;
@@ -829,7 +829,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
  		newAPTTask3.Type__c 			= 'Email';
  		newAPTTask3.Priority__c 		= 'High';
  		
-		apTemplate.aptTasks = new List<APTTaskTemplate__c>();
+		apTemplate.aptTasks = new List<ActionPlanTemplateTask__c>();
 		apTemplate.aptTasks.add( newAPTTask );
 		apTemplate.aptTasks.add( newAPTTask2 );		
 		apTemplate.aptTasks.add( newAPTTask3 );		
@@ -882,8 +882,8 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
    		ActionPlanTemplates apTemplate = new ActionPlanTemplates( apt );
    		Test.StartTest();
 
-   			apTemplate.pendingTemplateDeletes = new List<APTTaskTemplate__c>();
-   			apTemplate.aptTasks = new List<APTTaskTemplate__c>();
+   			apTemplate.pendingTemplateDeletes = new List<ActionPlanTemplateTask__c>();
+   			apTemplate.aptTasks = new List<ActionPlanTemplateTask__c>();
    			apTemplate.pendingTemplateDeletes.add( ge.createNewActionPlanTemplateTask(apt, 3, tUser, 'Email', 'High') );
    			apTemplate.aptTasks.add( ge.createNewActionPlanTemplateTask(apt, 3, tUser, 'Email', 'High') );
    			apTemplate.aptTasks.add( ge.createNewActionPlanTemplateTask(apt, 3, tUser, 'Email', 'High') );
@@ -894,9 +894,9 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
    			System.assert( !apTemplate.pendingTemplateDeletes.isEmpty() );
    			
    			//Enter to Task Catch()
-   			apTemplate.pendingTemplateDeletes = new List<APTTaskTemplate__c>();
+   			apTemplate.pendingTemplateDeletes = new List<ActionPlanTemplateTask__c>();
    			apTemplate.aptTasks.clear();
-			apTemplate.aptTasks.add( new APTTaskTemplate__c( DaysFromStart__c = 3 ) );	
+			apTemplate.aptTasks.add( new ActionPlanTemplateTask__c( DaysFromStart__c = 3 ) );	
    			apTemplate.saveTemplate();
    			
 			System.assert( !apTemplate.aptTasks.isEmpty());

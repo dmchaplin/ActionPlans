@@ -69,9 +69,9 @@ public with sharing class ActionPlanTemplateDetailController {
 	
 	/**
 	 * Call method getTemplateTasks() insde the class ActionPlanTemplates
-	 * @return List<APTTaskTemplate__c>
+	 * @return List<ActionPlanTemplateTask__c>
 	 */
-	public List<APTTaskTemplate__c> getTemplateTasks(){
+	public List<ActionPlanTemplateTask__c> getTemplateTasks(){
 		return actionPlanTemplates.getTemplateTasks();
 	}
 	
@@ -138,7 +138,7 @@ public with sharing class ActionPlanTemplateDetailController {
     	System.currentPageReference().getParameters().put( 'id', apTemplate.Id );
     	ActionPlanTemplateDetailController apTemplateDetailController = new ActionPlanTemplateDetailController( new ApexPages.StandardController( new ActionPlanTemplate__c() ) );
     	
-    	List<APTTaskTemplate__c> taskList = apTemplateDetailController.getTemplateTasks();
+    	List<ActionPlanTemplateTask__c> taskList = apTemplateDetailController.getTemplateTasks();
     	
     	//Checks to see if template tasks is not empty
     	System.assert( !taskList.isEmpty(), 'action plan Template tasks is empty' );
