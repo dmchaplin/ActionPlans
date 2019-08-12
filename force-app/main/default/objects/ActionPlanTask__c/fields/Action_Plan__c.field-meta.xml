@@ -4,7 +4,7 @@
     <externalId>false</externalId>
     <label>Action Plan</label>
     <referenceTo>ActionPlan__c</referenceTo>
-    <relationshipName>R00NR0000000VccFMAS</relationshipName>
+    <relationshipName>ActionPlan</relationshipName>
     <relationshipOrder>0</relationshipOrder>
     <type>MasterDetail</type>
     <writeRequiresMasterRead>false</writeRequiresMasterRead>

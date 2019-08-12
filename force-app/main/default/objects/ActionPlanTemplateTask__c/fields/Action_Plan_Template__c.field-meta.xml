@@ -5,7 +5,7 @@
     <label>Action Plan Template</label>
     <referenceTo>ActionPlanTemplate__c</referenceTo>
     <relationshipLabel>APT Task Templates</relationshipLabel>
-    <relationshipName>apTasks</relationshipName>
+    <relationshipName>ActionPlanTemplates</relationshipName>
     <relationshipOrder>0</relationshipOrder>
     <type>MasterDetail</type>
     <writeRequiresMasterRead>false</writeRequiresMasterRead>

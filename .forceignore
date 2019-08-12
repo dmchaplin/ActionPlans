@@ -10,4 +10,5 @@ package.xml
 
 # LWC Jest
 **/__tests__/**
-Admin.Profile
+
+**/Admin.Profile
