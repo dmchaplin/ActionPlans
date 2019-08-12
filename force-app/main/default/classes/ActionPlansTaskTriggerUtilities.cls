@@ -34,9 +34,9 @@ public with sharing class ActionPlansTaskTriggerUtilities {
 
     public  List<String>            closedTasks     { get; set; }
     public  List<String>            inProgressTasks { get; set; }
-    private List<APTaskTemplate__c> dependentAptts  { get; set; }
+    private List<ActionPlanTask__c> dependentAptts  { get; set; }
     private Map<String, Task>       newTaskMap      { get; set; }
-    private List<APTaskTemplate__c> updateApttsList { get; set; }
+    private List<ActionPlanTask__c> updateApttsList { get; set; }
     private List<Task> tasksSendEmail				{ get; set; }
     private List<Task> tasksSendNoEmail 			{ get; set; }
 
@@ -98,10 +98,10 @@ public with sharing class ActionPlansTaskTriggerUtilities {
         
         List<String>  tasksId = (newStatus=='Completed')? this.closedTasks : this.inProgressTasks;
         
-        List<APTaskTemplate__c> closeApttList = new List<APTaskTemplate__c>();
-        APTaskTemplate__c[] tempApttList = [ select ap.Status__c from APTaskTemplate__c ap where ap.Id IN : tasksId ];
+        List<ActionPlanTask__c> closeApttList = new List<ActionPlanTask__c>();
+        ActionPlanTask__c[] tempApttList = [ select ap.Status__c from ActionPlanTask__c ap where ap.Id IN : tasksId ];
         
-        for ( APTaskTemplate__c aptt : tempApttList ){
+        for ( ActionPlanTask__c aptt : tempApttList ){
             aptt.Status__c = newStatus;
             closeApttList.add( aptt );
         }
@@ -114,16 +114,16 @@ public with sharing class ActionPlansTaskTriggerUtilities {
      */
     private void dependentActionPlansTemplateTask() {
         
-        this.dependentAptts = new List<APTaskTemplate__c>();
+        this.dependentAptts = new List<ActionPlanTask__c>();
         //Add Action Plan custom object reference Field.
         this.dependentAptts = [select a.Action_Plan__r.SkipWeekends__c, a.Action_Plan__r.Account__c, a.Priority__c, a.Status__c, 
                                  a.Action_Plan__r.Contact__c, a.Action_Plan__r.Lead__c, a.Action_Plan__r.Opportunity__c,
                                  a.Action_Plan__r.Contract__c, a.Action_Plan__r.Case__c, a.Action_Plan__r.Campaign__c ,
                                  a.Action_Plan__r.StartDate__c, a.Action_Plan__c, a.Type__c, a.Subject__c, a.ActivityDate__c, 
                                  a.Dependent__c, a.Name, a.User__c, a.User__r.Name, a.Id, a.DaysFromStart__c, a.CreatedById,
-                                 a.APTaskTemplate__r.Subject__c, a.APTaskTemplate__c, a.SendEmail__c,  a.APTaskTemplate__r.Name, 
+                                 a.APTaskTemplate__r.Subject__c, a.ActionPlanTask__c, a.SendEmail__c,  a.APTaskTemplate__r.Name, 
                                  a.Reminder__c, a.Comments__c, a.Minutes_Reminder__c
-                          from APTaskTemplate__c a where a.APTaskTemplate__c IN : this.closedTasks ];                         
+                          from ActionPlanTask__c a where a.ActionPlanTask__c IN : this.closedTasks ];                         
     }
     
     
@@ -131,11 +131,11 @@ public with sharing class ActionPlansTaskTriggerUtilities {
      * Cycle through list of dependent Action Plans Template Task and create actual tasks
      */
      private void populateNewTaskMap(){
-		List<APTaskTemplate__c> updList = new List<APTaskTemplate__c>();
+		List<ActionPlanTask__c> updList = new List<ActionPlanTask__c>();
 		Task auxTask;
         this.newTaskMap = new Map<String, Task>();
             
-        for( APTaskTemplate__c dependentAptts: this.dependentAptts ){
+        for( ActionPlanTask__c dependentAptts: this.dependentAptts ){
         	
         	//Create the new task and template
             //check if the task was already created
@@ -194,9 +194,9 @@ public with sharing class ActionPlansTaskTriggerUtilities {
      */
      private void populateUpdateApttsList(){
         Task t2 ;
-        this.updateApttsList = new List<APTaskTemplate__c>();
+        this.updateApttsList = new List<ActionPlanTask__c>();
           
-        for( APTaskTemplate__c dependentAptt: this.dependentAptts ){
+        for( ActionPlanTask__c dependentAptt: this.dependentAptts ){
             
             //Create the new task and template
             List<Task> lt = [Select Id from Task where TaskTemplateId__c   =: dependentAptt.Id];
@@ -281,7 +281,7 @@ public with sharing class ActionPlansTaskTriggerUtilities {
      
      private Date getCompletedATPTaskDate( String aptTaskId ){
 		Date d;
-		APTaskTemplate__c lAPT = [Select APTaskTemplate__r.id, APTaskTemplate__r.ActivityDate__c from APTaskTemplate__c where id =: aptTaskId];
+		ActionPlanTask__c lAPT = [Select APTaskTemplate__r.id, APTaskTemplate__r.ActivityDate__c from ActionPlanTask__c where id =: aptTaskId];
 		
 		if ( lAPT != null &&  lAPT.APTaskTemplate__r.ActivityDate__c != null){
 			d = lAPT.APTaskTemplate__r.ActivityDate__c;
@@ -294,13 +294,13 @@ public with sharing class ActionPlansTaskTriggerUtilities {
      
     /**
     * Return a map the user preference associated with a user.
-    * @param aptTasks	a list of APTaskTemplate__c custom object 
+    * @param aptTasks	a list of ActionPlanTask__c custom object 
     * @return userPrefbyUserMap  a map with key UserId and value a user preference.
     */
-     private Map<Id,UserPreference> getUserPrefFromAPTaskTemplates( List<APTaskTemplate__c> aptTasks ){
+     private Map<Id,UserPreference> getUserPrefFromAPTaskTemplates( List<ActionPlanTask__c> aptTasks ){
      	
     	Set<Id> usersSet = new Set<Id>();
-		for( APTaskTemplate__c apTask : aptTasks){
+		for( ActionPlanTask__c apTask : aptTasks){
 			usersSet.add(apTask.User__c);
 		}
 		Map<Id,UserPreference> userPrefsMap = new Map<Id,UserPreference>([ Select u.Value, u.UserId, u.Preference, u.Id From UserPreference u where u.Preference = '58' and u.UserId in :usersSet ]);
@@ -340,7 +340,7 @@ public with sharing class ActionPlansTaskTriggerUtilities {
     	
         if( !aPTasks.isEmpty() ){
             
-        	delete [select aPT.id from APTaskTemplate__c aPT where aPT.id in : aPTasks];
+        	delete [select aPT.id from ActionPlanTask__c aPT where aPT.id in : aPTasks];
         }
     }
     
@@ -376,11 +376,11 @@ public with sharing class ActionPlansTaskTriggerUtilities {
     	Rearranges the dependencies between tasks.
     
     */
-    private static void generateDependentTasksAndReset(List<APTaskTemplate__c> apTasks, Double tmp_taskIndex ){
+    private static void generateDependentTasksAndReset(List<ActionPlanTask__c> apTasks, Double tmp_taskIndex ){
         List<String> pendingIdsToDelete = new List<String>();
             
 		Integer taskIndex ;
-        APTaskTemplate__c apTask;
+        ActionPlanTask__c apTask;
         Integer dependentApTask;       
       
 		for( Integer t_i = 0; t_i < apTasks.size();  t_i++ ){			
@@ -404,7 +404,7 @@ public with sharing class ActionPlansTaskTriggerUtilities {
 	    		}else {
 		    		if( dependentApTask == taskIndex ){
 	    				apTask.Dependent__c 		= 'None';
-	    				apTask.APTaskTemplate__c    = null;
+	    				apTask.ActionPlanTask__c    = null;
 	    			}
 	    		}
     		}
@@ -459,22 +459,22 @@ public with sharing class ActionPlansTaskTriggerUtilities {
     	try{
 	    	
 	    	ActionPlansTaskTriggerUtilities apUtils = new ActionPlansTaskTriggerUtilities();
-	   		Map<String,APTaskTemplate__c> apIdsMaps = new Map<String,APTaskTemplate__c>();
-	    	List<APTaskTemplate__c>  lAPT = [select  a.Id , a.Action_Plan__c , a.taskIndex__c , a.Dependent__c
-											from APTaskTemplate__c a 
+	   		Map<String,ActionPlanTask__c> apIdsMaps = new Map<String,ActionPlanTask__c>();
+	    	List<ActionPlanTask__c>  lAPT = [select  a.Id , a.Action_Plan__c , a.taskIndex__c , a.Dependent__c
+											from ActionPlanTask__c a 
 											where id  in: cTasks ];
 			
 			//create a map with : (APTaskId, APTaskTemplate)
-			for(APTaskTemplate__c ap : lAPT){
+			for(ActionPlanTask__c ap : lAPT){
 				apIdsMaps.put(ap.Action_Plan__c,ap);
 			}								
 	    	
-	    	List<APTaskTemplate__c>  tmp_lAPT;
-	    	APTaskTemplate__c aux;
+	    	List<ActionPlanTask__c>  tmp_lAPT;
+	    	ActionPlanTask__c aux;
 	    	for(String apId : apIdsMaps.keySet()){
 	    		
 				tmp_lAPT = [select  a.Id ,a.Action_Plan__c ,a.taskIndex__c , a.Dependent__c
-									from APTaskTemplate__c a 
+									from ActionPlanTask__c a 
 									where a.Action_Plan__c  =: apId ];
 				//
 				aux = apIdsMaps.get(apId);

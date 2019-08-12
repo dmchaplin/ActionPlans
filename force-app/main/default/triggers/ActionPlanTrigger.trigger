@@ -14,7 +14,7 @@ trigger ActionPlanTrigger on ActionPlan__c ( before delete, after insert, after 
 	            apIds.add( ap.Id );
 	        }
 	       
-			for( APTaskTemplate__c aptt : [ select Id from APTaskTemplate__c where Action_Plan__c in :apIds ] ){
+			for( ActionPlanTask__c aptt : [ select Id from ActionPlanTask__c where Action_Plan__c in :apIds ] ){
 	            apttIds.add( aptt.Id );
 	        } 
 	 		for( Task ap : [select Id from Task where Status != 'Completed' and TaskTemplateId__c in :apttIds ] ){
@@ -35,8 +35,8 @@ trigger ActionPlanTrigger on ActionPlan__c ( before delete, after insert, after 
             apIds.add( ap.Id );
         }
     	//get Id of all deleted Action Plan Tasks Templates
-    	Map<Id,APTaskTemplate__c> map_APTasks =new Map<ID, APTaskTemplate__c>([select  a.Id ,a.Action_Plan__c 
-													from APTaskTemplate__c a 
+    	Map<Id,ActionPlanTask__c> map_APTasks =new Map<ID, ActionPlanTask__c>([select  a.Id ,a.Action_Plan__c 
+													from ActionPlanTask__c a 
 													where a.Action_Plan__c  in: apIds  ALL ROWS ]);
     						
     	//get all tasks asociated to this APTasks

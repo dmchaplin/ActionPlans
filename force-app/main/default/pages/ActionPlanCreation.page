@@ -293,18 +293,18 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 		                        </apex:column>
 		                        
 		                        <!--  Tasks subject  -->
-		                        <apex:column headerValue="{!$ObjectType.APTaskTemplate__c.fields.Subject__c.label}" headerClass="thirdN" >
+		                        <apex:column headerValue="{!$ObjectType.ActionPlanTask__c.fields.Subject__c.label}" headerClass="thirdN" >
 		                        	<apex:pageBlockSectionItem >
 		                        		<apex:inputField required="true" value="{!wrapTask.task.Subject__c}" styleClass="task_input_short" />
 		                        	</apex:pageBlockSectionItem>
 								</apex:column>
 
-								<apex:column  headerValue="{!$ObjectType.APTaskTemplate__c.fields.DueDateRelation__c.label}">
+								<apex:column  headerValue="{!$ObjectType.ActionPlanTask__c.fields.DueDateRelation__c.label}">
 									<apex:inputField required="true" value="{!wrapTask.task.DueDateRelation__c}" />
 								</apex:column>
 
 		                        <!--  Tasks depending status  -->		                        
-		                        <apex:column headerValue="{!$ObjectType.APTaskTemplate__c.fields.APTaskTemplate__c.label}" rendered="{!IF(TaskSize > 1, true, false)}"   headerClass="thirdN" >
+		                        <apex:column headerValue="{!$ObjectType.ActionPlanTask__c.fields.ActionPlanTask__c.label}" rendered="{!IF(TaskSize > 1, true, false)}"   headerClass="thirdN" >
 		                            <apex:selectList id="dependent" value="{!wrapTask.task.Dependent__c}" multiselect="false" size="1"  onchange="javascript:ActionPlanCreationScripts.checkDependent('{!$Component.taskTable.dependent}');" styleClass="selectDepending">
 		                                <apex:selectOptions value="{!SubjectItems}" />
 		                            </apex:selectList>
@@ -313,7 +313,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 
 		                        <!--  Tasks Days After  -->		                        
 		                        <apex:column headerClass="fourthN" >
-		                       		<apex:facet name="header">{!$ObjectType.APTaskTemplate__c.fields.DaysFromStart__c.label}
+		                       		<apex:facet name="header">{!$ObjectType.ActionPlanTask__c.fields.DaysFromStart__c.label}
 										<span id="daysAfterTtip_help" class="helpButton">
 											<img class="helpOrb" title="{!$Label.ap_days_after_msg}" src="/s.gif"/>
 										</span>
@@ -334,20 +334,20 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 		            				<div style="display:none"><apex:inputField id="activityDate" value="{!wrapTask.task.ActivityDate__c}"/></div>                   
 		                        </apex:column>
 
-								<apex:column headerValue="{!$ObjectType.APTaskTemplate__c.fields.RelatedDateField__c.label}">
+								<apex:column headerValue="{!$ObjectType.ActionPlanTask__c.fields.RelatedDateField__c.label}">
 									<apex:inputField required="false" value="{!wrapTask.task.RelatedDateField__c}" />
 								</apex:column>
 
-								<apex:column headerValue="{!$ObjectType.APTaskTemplate__c.fields.CreateTaskWhen__c.label}">
+								<apex:column headerValue="{!$ObjectType.ActionPlanTask__c.fields.CreateTaskWhen__c.label}">
 									<apex:inputField required="false" value="{!wrapTask.task.CreateTaskWhen__c}" />
 								</apex:column>
 
-								<apex:column headerValue="{!$ObjectType.APTaskTemplate__c.fields.AssignToType__c.label}">
+								<apex:column headerValue="{!$ObjectType.ActionPlanTask__c.fields.AssignToType__c.label}">
 									<apex:inputField required="false" value="{!wrapTask.task.AssignToType__c}" />
 								</apex:column>
 
 		                        <!--  Tasks Assigned TO  -->			                        
-								<apex:column headerValue="{!$ObjectType.APTaskTemplate__c.fields.User__c.label}"  headerClass="fifthN" >
+								<apex:column headerValue="{!$ObjectType.ActionPlanTask__c.fields.User__c.label}"  headerClass="fifthN" >
 									<apex:outputPanel id="ownerRecordPanel" style="">
 	                             		<apex:pageBlockSectionItem rendered="{!wrapTask.displayLookUp}"><apex:inputField required="{!wrapTask.userRequired}" value="{!wrapTask.task.User__c}"  styleClass="task_input_short" /></apex:pageBlockSectionItem>
 	                             		<apex:pageBlockSectionItem rendered="{!!wrapTask.displayLookUp}">[ {!$Label.ap_RecordOwner} ]</apex:pageBlockSectionItem>
@@ -355,14 +355,14 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 	                        	</apex:column> 
 		                        
 		                        <!--  Tasks type  -->			                        
-		                        <apex:column headerValue="{!$ObjectType.APTaskTemplate__c.fields.Type__c.label}"  headerClass="sixthN">
+		                        <apex:column headerValue="{!$ObjectType.ActionPlanTask__c.fields.Type__c.label}"  headerClass="sixthN">
 		                        	<apex:pageBlockSectionItem >
 		                        		<apex:inputField required="true" value="{!wrapTask.task.Type__c}"/>
 		                        	</apex:pageBlockSectionItem>
 		                        </apex:column>
 		                        
 		                        <!--  Tasks priority  -->	
-		                        <apex:column headerValue="{!$ObjectType.APTaskTemplate__c.fields.Priority__c.label}"  headerClass="septhN">
+		                        <apex:column headerValue="{!$ObjectType.ActionPlanTask__c.fields.Priority__c.label}"  headerClass="septhN">
 		                        	<apex:pageBlockSectionItem >
 		                        		<apex:inputField required="true" value="{!wrapTask.task.Priority__c}"/>
 		                        	</apex:pageBlockSectionItem>
@@ -372,7 +372,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 		                        <!--  Tasks send Email  -->			                       
 		                        <apex:column headerClass="eigthN">
 		                            <apex:facet name="header">
-		                            	{!$ObjectType.APTaskTemplate__c.fields.SendEmail__c.label} <br/>
+		                            	{!$ObjectType.ActionPlanTask__c.fields.SendEmail__c.label} <br/>
 		                          		<a id="all" onclick="javascript:ActionPlanCreationScripts.checkEmail(1);" class="all-none">{!$Label.ap_All}</a> | 
 		                            	<a id="none" onclick="javascript:ActionPlanCreationScripts.checkEmail(0);" class="all-none">{!$Label.ap_None}</a>
 		                            </apex:facet>
@@ -382,7 +382,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 		                        
 		                        <!--  Tasks reminder settings  -->	
 		                        <apex:column rendered="{!displayReminder}"  headerClass="ninthN">
-		                            <apex:facet name="header">{!$ObjectType.APTaskTemplate__c.fields.Reminder__c.label} <br/>
+		                            <apex:facet name="header">{!$ObjectType.ActionPlanTask__c.fields.Reminder__c.label} <br/>
 		                            <a id="reminderAll" onclick="javascript:ActionPlanCreationScripts.checkReminder(1);" class="all-none">{!$Label.ap_All}</a> | 
 		                            <a id="reminderNone" onclick="javascript:ActionPlanCreationScripts.checkReminder(0);" class="all-none">{!$Label.ap_None}</a></apex:facet>
 		                            <apex:pageBlockSectionItem id="reminderSection">
@@ -396,7 +396,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 		                        </apex:column>
 		                        
 		                        <!--  Tasks comments  -->			                       
-		                        <apex:column headerValue="{!$ObjectType.APTaskTemplate__c.fields.Comments__c.label}"  headerClass="tenthN">
+		                        <apex:column headerValue="{!$ObjectType.ActionPlanTask__c.fields.Comments__c.label}"  headerClass="tenthN">
 		                            <apex:outputPanel id="commentPanel" style="display:none">
 		                                <div id="commentContainer">
 		                                    <div class="hd">

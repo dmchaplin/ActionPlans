@@ -87,23 +87,23 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 	           </apex:panelGrid>
 	            
 	           <apex:dataTable value="{!tasks}" var="task" id="theTable" styleClass="sortable noBump">
-				   <apex:column id="columnOne" headerValue="{!$ObjectType.APTaskTemplate__c.fields.Subject__c.label}" >
+				   <apex:column id="columnOne" headerValue="{!$ObjectType.ActionPlanTask__c.fields.Subject__c.label}" >
 				   		<apex:outputText id="subject">{!task.Subject__c}</apex:outputText>
 				   </apex:column>
-	               <apex:column id="dependency" headerValue="{!$ObjectType.APTaskTemplate__c.fields.APTaskTemplate__c.label}" headerClass="dependencyColumn">
+	               <apex:column id="dependency" headerValue="{!$ObjectType.ActionPlanTask__c.fields.ActionPlanTask__c.label}" headerClass="dependencyColumn">
 	               		<apex:outputText >{!task.APTaskTemplate__r.Subject__c}</apex:outputText>
 	               </apex:column>
-	               <apex:column headerValue="{!$ObjectType.APTaskTemplate__c.fields.ActivityDate__c.label}" >
+	               <apex:column headerValue="{!$ObjectType.ActionPlanTask__c.fields.ActivityDate__c.label}" >
 	                   <span style="color:#cc0000"><apex:outputField value="{!task.ActivityDate__c}" rendered="{!IF(task.ActivityDate__c < TODAY() && task.Status__c != 'Completed', true, false)}" /></span>
 	                   <apex:outputField value="{!task.ActivityDate__c}" rendered="{!IF(task.ActivityDate__c >= TODAY() || task.Status__c == 'Completed', true, false)}" />
 	               </apex:column>
-	               <apex:column headerValue="{!$ObjectType.APTaskTemplate__c.fields.User__c.label}">
+	               <apex:column headerValue="{!$ObjectType.ActionPlanTask__c.fields.User__c.label}">
 	               		<apex:outputText >{!task.User__r.Name}</apex:outputText>
 	               </apex:column>
-	               <apex:column headerValue="{!$ObjectType.APTaskTemplate__c.fields.Type__c.label}" value="{!task.Type__c}" />
-	               <apex:column headerValue="{!$ObjectType.APTaskTemplate__c.fields.Status__c.label}" value="{!task.Status__c}" />
-	               <apex:column headerValue="{!$ObjectType.APTaskTemplate__c.fields.Priority__c.label}" value="{!task.Priority__c}" />
-	               <apex:column id="comment" headerValue="{!$ObjectType.APTaskTemplate__c.fields.Comments__c.label}" >
+	               <apex:column headerValue="{!$ObjectType.ActionPlanTask__c.fields.Type__c.label}" value="{!task.Type__c}" />
+	               <apex:column headerValue="{!$ObjectType.ActionPlanTask__c.fields.Status__c.label}" value="{!task.Status__c}" />
+	               <apex:column headerValue="{!$ObjectType.ActionPlanTask__c.fields.Priority__c.label}" value="{!task.Priority__c}" />
+	               <apex:column id="comment" headerValue="{!$ObjectType.ActionPlanTask__c.fields.Comments__c.label}" >
 	               		<apex:outputText >{!task.Comments__c}</apex:outputText>
 	               </apex:column>
 	           </apex:dataTable>

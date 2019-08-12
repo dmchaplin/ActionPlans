@@ -41,10 +41,10 @@ public with sharing class ActionPlansBatchBuilderTest {
 		
 			ActionPlan__c ap = ge.createNewActionPlan( 'accounts' ,2);
 			ap.Name= 'check_undelete';
-			List<APTaskTemplate__c> apTasks = new List<APTaskTemplate__c>();
+			List<ActionPlanTask__c> apTasks = new List<ActionPlanTask__c>();
 			User u = ge.createTestUser();
 			
-			APTaskTemplate__c at = new APTaskTemplate__c();
+			ActionPlanTask__c at = new ActionPlanTask__c();
 	   		at.Action_Plan__c 	 = ap.Id;
 	   		at.Dependent__c		 = 'None';
 	   		at.DaysFromStart__c  = 2.0;
@@ -59,7 +59,7 @@ public with sharing class ActionPlansBatchBuilderTest {
 	   		insert at;
 	   		apTasks.add(at);
 	   		
-	   		at = new APTaskTemplate__c();
+	   		at = new ActionPlanTask__c();
 	   		at.Action_Plan__c 	 = ap.Id;
 	   		at.Dependent__c		 = 'None';
 	   		at.DaysFromStart__c  = 2.0;
@@ -115,10 +115,10 @@ public with sharing class ActionPlansBatchBuilderTest {
 		Test.startTest();
 		
 			ActionPlan__c ap = ge.createNewActionPlan( 'contacts' ,2);
-			List<APTaskTemplate__c> apTasks = new List<APTaskTemplate__c>();
+			List<ActionPlanTask__c> apTasks = new List<ActionPlanTask__c>();
 			User u = ge.createTestUser();
 			
-			APTaskTemplate__c at = new APTaskTemplate__c();
+			ActionPlanTask__c at = new ActionPlanTask__c();
 	   		at.Action_Plan__c 	 = ap.Id;
 	   		at.Dependent__c		 = 'None';
 	   		at.DaysFromStart__c  = 2.0;
@@ -133,7 +133,7 @@ public with sharing class ActionPlansBatchBuilderTest {
 	   		insert at;
 	   		apTasks.add(at);
 	   		
-	   		at = new APTaskTemplate__c();
+	   		at = new ActionPlanTask__c();
 	   		at.Action_Plan__c 	 = ap.Id;
 	   		at.Dependent__c		 = 'None';
 	   		at.DaysFromStart__c  = 2.0;
@@ -179,9 +179,9 @@ public with sharing class ActionPlansBatchBuilderTest {
 		
 		
 			ActionPlan__c ap = ge.createNewActionPlan( 'opportunitys' ,2);
-			List<APTaskTemplate__c> apTasks = new List<APTaskTemplate__c>();
+			List<ActionPlanTask__c> apTasks = new List<ActionPlanTask__c>();
 		
-			APTaskTemplate__c at = new APTaskTemplate__c();
+			ActionPlanTask__c at = new ActionPlanTask__c();
 	   		at.Action_Plan__c 	 = ap.Id;
 	   		at.Dependent__c		 = 'None';
 	   		at.DaysFromStart__c  = 2.0;
@@ -196,7 +196,7 @@ public with sharing class ActionPlansBatchBuilderTest {
 	   		insert at;
 	   		apTasks.add(at);
 	   		
-	   		at = new APTaskTemplate__c();
+	   		at = new ActionPlanTask__c();
 	   		at.Action_Plan__c 	 = ap.Id;
 	   		at.Dependent__c		 = 'None';
 	   		at.DaysFromStart__c  = 2.0;
@@ -243,7 +243,7 @@ public with sharing class ActionPlansBatchBuilderTest {
 /*		ActionPlansTestUtilities ge = new ActionPlansTestUtilities();
 		
 		ActionPlan__c ap = ge.createNewActionPlan( 'leads' ,2);
-		List<APTaskTemplate__c> apTasks = new List<APTaskTemplate__c>();
+		List<ActionPlanTask__c> apTasks = new List<ActionPlanTask__c>();
 		List<string> oIdsList = new List<String>();
 		
 		Test.startTest();
@@ -259,9 +259,9 @@ public with sharing class ActionPlansBatchBuilderTest {
 		
 		
 			ActionPlan__c ap = ge.createNewActionPlan( 'opportunitys' ,2);
-			List<APTaskTemplate__c> apTasks = new List<APTaskTemplate__c>();
+			List<ActionPlanTask__c> apTasks = new List<ActionPlanTask__c>();
 		
-			APTaskTemplate__c at = new APTaskTemplate__c();
+			ActionPlanTask__c at = new ActionPlanTask__c();
 	   		at.Action_Plan__c 	 = ap.Id;
 	   		at.Dependent__c		 = 'None';
 	   		at.DaysFromStart__c  = 2.0;
@@ -276,7 +276,7 @@ public with sharing class ActionPlansBatchBuilderTest {
 	   		insert at;
 	   		apTasks.add(at);
 	   		
-	   		at = new APTaskTemplate__c();
+	   		at = new ActionPlanTask__c();
 	   		at.Action_Plan__c 	 = ap.Id;
 	   		at.Dependent__c		 = 'None';
 	   		at.DaysFromStart__c  = 2.0;

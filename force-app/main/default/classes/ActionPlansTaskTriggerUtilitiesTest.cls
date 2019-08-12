@@ -48,11 +48,11 @@ private class ActionPlansTaskTriggerUtilitiesTest {
     	
     	List<Id> apTTaskIds 		= new List<Id>();
     	List<Task> apTask 			= new List<Task>();
-    	List<APTaskTemplate__c> aptt = new List<APTaskTemplate__c>();
+    	List<ActionPlanTask__c> aptt = new List<ActionPlanTask__c>();
     	
 		Test.startTest();
 		   	for( Integer i = 0; i < 4; i++ ){
-		   		APTaskTemplate__c at = new APTaskTemplate__c();
+		   		ActionPlanTask__c at = new ActionPlanTask__c();
 		   		at.Action_Plan__c 	 = ap.Id;
 		   		at.DaysFromStart__c  = 2.0;
 		   		at.User__c			 = ge.createTestUser().Id;
@@ -64,7 +64,7 @@ private class ActionPlansTaskTriggerUtilitiesTest {
 		   		at.Subject__c		 = 'Test '+ i;
 		   		at.Type__c			 = 'Email';
 		   		at.Priority__c		 = 'Low';
-		   		at.APTaskTemplate__c = ( i > 0 ) ? aptt[ i-1 ].Id : null;
+		   		at.ActionPlanTask__c = ( i > 0 ) ? aptt[ i-1 ].Id : null;
 		   		insert at;
 		   		aptt.add(at);
 		   		apTTaskIds.add( at.Id );
@@ -103,11 +103,11 @@ private class ActionPlansTaskTriggerUtilitiesTest {
     	
     	List<Id> apTTaskIds 		= new List<Id>();
     	List<Task> apTask 			= new List<Task>();
-    	List<APTaskTemplate__c> aptt = new List<APTaskTemplate__c>();
+    	List<ActionPlanTask__c> aptt = new List<ActionPlanTask__c>();
 		
 		Test.startTest();
 		   	for( Integer i = 0; i < 4; i++ ){
-		   		APTaskTemplate__c at = new APTaskTemplate__c();
+		   		ActionPlanTask__c at = new ActionPlanTask__c();
 		   		at.Action_Plan__c 	 = ap.Id;
 		   		at.DaysFromStart__c  = 2.0;
 		   		at.User__c			 = ge.createTestUser().Id;
@@ -117,7 +117,7 @@ private class ActionPlansTaskTriggerUtilitiesTest {
 		   		at.Priority__c		 = 'Low';
 		   		at.Comments__c		 = 'My Coment';
 		   		at.Reminder__c		 = true;
-		   		at.APTaskTemplate__c = ( i > 0 ) ? aptt[ i-1 ].Id : null;
+		   		at.ActionPlanTask__c = ( i > 0 ) ? aptt[ i-1 ].Id : null;
 		   		insert at;
 		   		aptt.add(at);
 		   		apTTaskIds.add( at.Id );
@@ -151,11 +151,11 @@ private class ActionPlansTaskTriggerUtilitiesTest {
     	
     	List<Id> apTTaskIds 		= new List<Id>();
     	List<Task> apTask 			= new List<Task>();
-    	List<APTaskTemplate__c> aptt = new List<APTaskTemplate__c>();
+    	List<ActionPlanTask__c> aptt = new List<ActionPlanTask__c>();
 		
 		Test.startTest();
 		   	for( Integer i = 0; i < 4; i++ ){
-		   		APTaskTemplate__c at = new APTaskTemplate__c();
+		   		ActionPlanTask__c at = new ActionPlanTask__c();
 		   		at.Action_Plan__c 	 = ap.Id;
 		   		at.DaysFromStart__c  = 2.0;
 		   		at.User__c			 = ge.createTestUser().Id;
@@ -166,7 +166,7 @@ private class ActionPlansTaskTriggerUtilitiesTest {
 		   		at.Comments__c		 = 'My Coment';
 		   		at.Reminder__c		 = true;
 		   		at.Minutes_Reminder__c = '510';
-		   		at.APTaskTemplate__c = ( i > 0 ) ? aptt[ i-1 ].Id : null;
+		   		at.ActionPlanTask__c = ( i > 0 ) ? aptt[ i-1 ].Id : null;
 		   		insert at;
 		   		aptt.add(at);
 		   		apTTaskIds.add( at.Id );
@@ -207,7 +207,7 @@ private class ActionPlansTaskTriggerUtilitiesTest {
     	update ap;
     	
 		// select the APTask Template
-   		APTaskTemplate__c at = [select id, Subject__c, Priority__c, User__c from APTaskTemplate__c where Action_Plan__c =: ap.id limit 1];
+   		ActionPlanTask__c at = [select id, Subject__c, Priority__c, User__c from ActionPlanTask__c where Action_Plan__c =: ap.id limit 1];
 	   		
 		// create the related Task
    		Task t 				= new Task();
@@ -220,7 +220,7 @@ private class ActionPlansTaskTriggerUtilitiesTest {
 		// delete the APTask Template 
 	   	delete at;
 	   	delete t;
-	   	List<APTaskTemplate__c> apttDel = [select id from APTaskTemplate__c where id =: at.Id];
+	   	List<ActionPlanTask__c> apttDel = [select id from ActionPlanTask__c where id =: at.Id];
 		System.assert(apttDel.size() == 0);	
 	   	
 	   	// undelete task and APTask and get exception
@@ -234,9 +234,9 @@ private class ActionPlansTaskTriggerUtilitiesTest {
 		}
 	   	
 	   	// now undelete and trigger the code
-	   	if ([select id from APTaskTemplate__c where id =: at.Id and isDeleted = true ].size() >0){
+	   	if ([select id from ActionPlanTask__c where id =: at.Id and isDeleted = true ].size() >0){
 			undelete at;	   	
-		   	List<APTaskTemplate__c> apttUnDel = [select id from APTaskTemplate__c where id =: at.Id];
+		   	List<ActionPlanTask__c> apttUnDel = [select id from ActionPlanTask__c where id =: at.Id];
 			System.assert(apttUnDel.size() == 1);	
 		}
 	   	
@@ -258,7 +258,7 @@ private class ActionPlansTaskTriggerUtilitiesTest {
     	update ap;
     	
 		// select the APTask Template
-   		APTaskTemplate__c at = [select id, Subject__c, Priority__c, User__c from APTaskTemplate__c where Action_Plan__c =: ap.id limit 1];
+   		ActionPlanTask__c at = [select id, Subject__c, Priority__c, User__c from ActionPlanTask__c where Action_Plan__c =: ap.id limit 1];
 	   		
 		// create the related Task
    		Task t 				= new Task();
@@ -272,7 +272,7 @@ private class ActionPlansTaskTriggerUtilitiesTest {
 	   	delete at;
 	   	delete t;
 	   	Database.emptyRecycleBin(t);
-	   	List<APTaskTemplate__c> apttDel = [select id from APTaskTemplate__c where id =: at.Id];
+	   	List<ActionPlanTask__c> apttDel = [select id from ActionPlanTask__c where id =: at.Id];
 		System.assert(apttDel.size() == 0);	
 	   	
 	   	// undelete task and APTask and get exception
@@ -300,11 +300,11 @@ private class ActionPlansTaskTriggerUtilitiesTest {
 		
 		List<Id> apTTaskIds 		= new List<Id>();
 		List<Task> apTask 			= new List<Task>();
-		List<APTaskTemplate__c> aptt = new List<APTaskTemplate__c>();
+		List<ActionPlanTask__c> aptt = new List<ActionPlanTask__c>();
 		
 		Test.startTest();
 		   	for( Integer i = 0; i < 4; i++ ){
-		   		APTaskTemplate__c at = new APTaskTemplate__c();
+		   		ActionPlanTask__c at = new ActionPlanTask__c();
 		   		at.Action_Plan__c 	 = ap.Id;
 		   		at.DaysFromStart__c  = 2.0;
 		   		at.User__c			 = ge.createTestUser().Id;
@@ -316,7 +316,7 @@ private class ActionPlansTaskTriggerUtilitiesTest {
 		   		at.Subject__c		 = 'Test '+ i;
 		   		at.Type__c			 = 'Email';
 		   		at.Priority__c		 = 'Low';
-		   		at.APTaskTemplate__c = ( i > 0 ) ? aptt[ i-1 ].Id : null;
+		   		at.ActionPlanTask__c = ( i > 0 ) ? aptt[ i-1 ].Id : null;
 		   		insert at;
 		   		aptt.add(at);
 		   		apTTaskIds.add( at.Id );
@@ -355,7 +355,7 @@ private class ActionPlansTaskTriggerUtilitiesTest {
 		ActionPlan__c ap 			= ge.createNewActionPlan( 'accounts', 0 );
 				
 		//Task Template 1
-		APTaskTemplate__c at = new APTaskTemplate__c();
+		ActionPlanTask__c at = new ActionPlanTask__c();
 		at.Action_Plan__c 	 = ap.Id;
 		at.DaysFromStart__c  = 2.0;
 		at.User__c				= ge.createTestUser().Id;
@@ -363,11 +363,11 @@ private class ActionPlansTaskTriggerUtilitiesTest {
 		at.Subject__c			= 'Test ';
 		at.Type__c				= 'Email';
 		at.Priority__c			= 'Low';
-		at.APTaskTemplate__c	= null; 
+		at.ActionPlanTask__c	= null; 
 		at.taskIndex__c			=0;
 		insert at;
 		//Task Template 2
-		APTaskTemplate__c at2 = new APTaskTemplate__c();
+		ActionPlanTask__c at2 = new ActionPlanTask__c();
 		at2.Action_Plan__c		= ap.Id;
 		at2.DaysFromStart__c	= 2.0;
 		at2.User__c				= ge.createTestUser().Id;
@@ -375,7 +375,7 @@ private class ActionPlansTaskTriggerUtilitiesTest {
 		at2.Subject__c			= 'Test2' ;
 		at2.Type__c				= 'Email';
 		at2.Priority__c			= 'Low';
-		at2.APTaskTemplate__c	=at.Id;
+		at2.ActionPlanTask__c	=at.Id;
 		at2.taskIndex__c			=1;
 		insert at2;
 		

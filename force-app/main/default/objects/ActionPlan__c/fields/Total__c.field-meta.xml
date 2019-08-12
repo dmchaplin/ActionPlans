@@ -5,7 +5,7 @@
     <externalId>false</externalId>
     <inlineHelpText>The total number of tasks on the Action Plan.</inlineHelpText>
     <label>Step Total</label>
-    <summaryForeignKey>APTaskTemplate__c.Action_Plan__c</summaryForeignKey>
+    <summaryForeignKey>ActionPlanTask__c.Action_Plan__c</summaryForeignKey>
     <summaryOperation>count</summaryOperation>
     <type>Summary</type>
 </CustomField>

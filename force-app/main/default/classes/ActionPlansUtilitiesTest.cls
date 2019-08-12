@@ -44,7 +44,7 @@ public with sharing class ActionPlansUtilitiesTest {
 		ApexPages.currentPage().getParameters().put( 'refId' ,  ap.Account__c);
    		
 		ActionPlansUtilities apu = new ActionPlansUtilities( ap );   		
-   		apu.apTasks = new List<APTaskTemplate__c>();
+   		apu.apTasks = new List<ActionPlanTask__c>();
    		apu.apTasks.add( ActionPlansUtilitiesTest.apptask( ap ) );
    		
    		
@@ -75,7 +75,7 @@ public with sharing class ActionPlansUtilitiesTest {
    		ApexPages.currentPage().getParameters().put( 'refType', 'Account' );
 		ApexPages.currentPage().getParameters().put( 'refId' ,  ap.Account__c);
 		ActionPlansUtilities apu = new ActionPlansUtilities( ap );
-   		apu.apTasks = new List<APTaskTemplate__c>();
+   		apu.apTasks = new List<ActionPlanTask__c>();
    		apu.apTasks.add( ActionPlansUtilitiesTest.apptask( ap ) );
 	   		
 		apu.saveMultiple();
@@ -100,7 +100,7 @@ public with sharing class ActionPlansUtilitiesTest {
 		ApexPages.currentPage().getParameters().put( 'refId' ,  ap.Contact__c);
 		
 		ActionPlansUtilities apu = new ActionPlansUtilities( ap );
-   		apu.apTasks = new List<APTaskTemplate__c>();
+   		apu.apTasks = new List<ActionPlanTask__c>();
    		apu.apTasks.add( ActionPlansUtilitiesTest.apptask( ap ) );
    		
 		apu.save();
@@ -129,7 +129,7 @@ public with sharing class ActionPlansUtilitiesTest {
    		ApexPages.currentPage().getParameters().put( 'refType', 'Opportunity' );
 		ApexPages.currentPage().getParameters().put( 'refId' ,  ap.Opportunity__c);
 		ActionPlansUtilities apu = new ActionPlansUtilities( ap );
-   		apu.apTasks = new List<APTaskTemplate__c>();
+   		apu.apTasks = new List<ActionPlanTask__c>();
    		apu.apTasks.add( ActionPlansUtilitiesTest.apptask( ap ) );
 
 		apu.save();
@@ -165,7 +165,7 @@ public with sharing class ActionPlansUtilitiesTest {
 			
 			
 			ActionPlansUtilities apu = new ActionPlansUtilities( ap );
-	   		apu.apTasks = new List<APTaskTemplate__c>();
+	   		apu.apTasks = new List<ActionPlanTask__c>();
 	   		apu.apTasks.add( ActionPlansUtilitiesTest.apptask( ap ) );
 	
 			apu.save();
@@ -201,7 +201,7 @@ public with sharing class ActionPlansUtilitiesTest {
 			
 			
 			ActionPlansUtilities apu = new ActionPlansUtilities( ap );
-	   		apu.apTasks = new List<APTaskTemplate__c>();
+	   		apu.apTasks = new List<ActionPlanTask__c>();
 	   		apu.apTasks.add( ActionPlansUtilitiesTest.apptask( ap ) );
 	
 			apu.save();
@@ -429,10 +429,10 @@ public with sharing class ActionPlansUtilitiesTest {
 		System.assertEquals(page.getUrl(), url);
 	}
 
-	public static APTaskTemplate__c apptask ( ActionPlan__c ap ){
+	public static ActionPlanTask__c apptask ( ActionPlan__c ap ){
 				
 		ActionPlansTestUtilities ge =  new ActionPlansTestUtilities();
-		APTaskTemplate__c at = new APTaskTemplate__c();
+		ActionPlanTask__c at = new ActionPlanTask__c();
    		at.Action_Plan__c 	 = ap.Id;
    		at.Dependent__c		 = 'None';
    		at.DaysFromStart__c  = 2.0;

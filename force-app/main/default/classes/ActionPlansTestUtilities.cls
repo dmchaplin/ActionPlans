@@ -36,12 +36,12 @@ public with sharing class ActionPlansTestUtilities{
 	* Attributes 
 	*/ 
  	public ActionPlan__c 		 tAP		{ get; set; }
- 	public APTaskTemplate__c	 tAPTask	{ get; set; }
+ 	public ActionPlanTask__c	 tAPTask	{ get; set; }
  	public ActionPlanTemplate__c tAPT		{ get; set; }
  	public ActionPlanTemplateTask__c	 tAPTTask	{ get; set; }
  	
  	//Lists
- 	public List<APTaskTemplate__c>	tAPTList	{ get; set; }
+ 	public List<ActionPlanTask__c>	tAPTList	{ get; set; }
  	public List<ActionPlanTemplateTask__c>	tAPTTList	{ get; set; }
  	public List<Task>				tTaskList	{ get; set; }
  	
@@ -307,7 +307,7 @@ public with sharing class ActionPlansTestUtilities{
  			System.assert( false ,' Inserting Action Plan failed,' + ex );
  		}
  		
- 		APTaskTemplate__c auxTask = new APTaskTemplate__c();
+ 		ActionPlanTask__c auxTask = new ActionPlanTask__c();
  		User user = this.createTestUser();
 
  		//Creates default tasks for Action Plan
@@ -324,9 +324,9 @@ public with sharing class ActionPlansTestUtilities{
  	* Create Action Plan task Object
  	* @return newAPTask
  	*/
- 	public APTaskTemplate__c createNewActionPlanTask( ActionPlan__c actionPlan , Integer days, User user, String category, String priority ){
+ 	public ActionPlanTask__c createNewActionPlanTask( ActionPlan__c actionPlan , Integer days, User user, String category, String priority ){
  		
- 		APTaskTemplate__c newAPTask = new APTaskTemplate__c();
+ 		ActionPlanTask__c newAPTask = new ActionPlanTask__c();
  		newAPTask.Subject__c 		= this.createRandomWord();
  		newAPTask.DaysFromStart__c 	= days;
  		newAPTask.Action_Plan__c 	= actionPlan.Id;
@@ -408,7 +408,7 @@ public with sharing class ActionPlansTestUtilities{
 	 		ActionPlan__c ap = this.createNewActionPlan( ref ,0);
 			List<String> apTasksIds = new List<String>();
 		
-			APTaskTemplate__c at = new APTaskTemplate__c();
+			ActionPlanTask__c at = new ActionPlanTask__c();
 	   		at.Action_Plan__c 	 = ap.Id;
 	   		at.Dependent__c		 = 'None';
 	   		at.DaysFromStart__c  = 2.0;
@@ -423,7 +423,7 @@ public with sharing class ActionPlansTestUtilities{
 	   		insert at;
 	   		apTasksIds.add(at.Id);
 	   		
-	   		at = new APTaskTemplate__c();
+	   		at = new ActionPlanTask__c();
 	   		at.Action_Plan__c 	 = ap.Id;
 	   		at.Dependent__c		 = 'None';
 	   		at.DaysFromStart__c  = 2.0;

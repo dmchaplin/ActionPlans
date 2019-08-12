@@ -62,14 +62,14 @@ public with sharing class ActionPlansBatchDeleteUtilities {
     
      public  void deleteActionPlans() {
 		  
-		List<APTaskTemplate__c> relTaskTemplateList = new List<APTaskTemplate__c>();
+		List<ActionPlanTask__c> relTaskTemplateList = new List<ActionPlanTask__c>();
 		List<String> relTaskTemplateIds 			= new List<String>();
 		List<Task> relTaskList 						= new List<Task>();
 		
 		try{	
 			relActionPlans = [Select Id from ActionPlan__c where Id in:this.relActionPlansIds limit :ActionPlansConstants.maxAPToDelete];
 			// 	task templates are deleted as they are the detail part or the relationship
-			Map<Id,APTaskTemplate__c> relTaskTemplateMap = new Map<Id,APTaskTemplate__c>([Select Id from APTaskTemplate__c where Action_Plan__c in:this.relActionPlansIds]);
+			Map<Id,ActionPlanTask__c> relTaskTemplateMap = new Map<Id,ActionPlanTask__c>([Select Id from ActionPlanTask__c where Action_Plan__c in:this.relActionPlansIds]);
 			relTaskList = [Select Id from Task t where t.TaskTemplateId__c in:relTaskTemplateMap.keySet()];
 			
 			delete relActionPlans;

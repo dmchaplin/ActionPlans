@@ -70,7 +70,7 @@ public with sharing class ActionPlanDetailController{
     /**
     * Gets all tasks for a given ActionPlan
     */
-    public List<APTaskTemplate__c> getTasks(){
+    public List<ActionPlanTask__c> getTasks(){
         
         return this.actionPlanUtil.getTasks();
     }
@@ -174,7 +174,7 @@ public with sharing class ActionPlanDetailController{
         
         System.currentPageReference().getParameters().put( 'id', actionPlan.Id );
         ActionPlanDetailController apDetailController = new ActionPlanDetailController( new ApexPages.StandardController( new ActionPlan__c() ) );      
-        List<APTaskTemplate__c> apTasks = apDetailController.getTasks();
+        List<ActionPlanTask__c> apTasks = apDetailController.getTasks();
         
         //Checks to see that list of tasks is not empty
         System.assert( !apTasks.isEmpty(), 'task list is empty' );
@@ -192,7 +192,7 @@ public with sharing class ActionPlanDetailController{
         System.currentPageReference().getParameters().put( 'id', actionPlan.Id );
         ActionPlanDetailController apDetailController = new ActionPlanDetailController( new ApexPages.StandardController( new ActionPlan__c() ) );      
         
-        List<APTaskTemplate__c> apTasks = apDetailController.getTasks();
+        List<ActionPlanTask__c> apTasks = apDetailController.getTasks();
         Integer numTasks                = apDetailController.getTaskSize();
         
         //Checks to see that list of tasks is not empty

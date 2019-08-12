@@ -36,11 +36,11 @@ public with sharing class ActionPlansUtilities{
     public ActionPlanTemplate__c    actionPlanTemplate;
     public List<ActionPlanTemplateTask__c> aptTasks;
     public ActionPlan__c            actionPlan;
-    public List<APTaskTemplate__c>  apTasks;
-    public List<APTaskTemplate__c>  apTasksOrg ;
+    public List<ActionPlanTask__c>  apTasks;
+    public List<ActionPlanTask__c>  apTasksOrg ;
     public String                   errorMsg;
     public List<ActionPlanTemplateTask__c> pendingTemplateDeletes;
-    public List<APTaskTemplate__c>  pendingDeletes;
+    public List<ActionPlanTask__c>  pendingDeletes;
     public Integer                  taskLimit;
     public List<String>             relatedObjIds;
     public String                   relatedObjName;
@@ -63,7 +63,7 @@ public with sharing class ActionPlansUtilities{
     */
     public ActionPlansUtilities( ActionPlan__c action ){
         
-        this.pendingDeletes = new List<APTaskTemplate__c>();
+        this.pendingDeletes = new List<ActionPlanTask__c>();
         this.actionPlan = action;
         this.taskLimit  = 75;
         this.errorMsg	= null;
@@ -108,10 +108,10 @@ public with sharing class ActionPlansUtilities{
     	Boolean exists 	= false;
     	Integer index 	= 0;
         
-        for( APTaskTemplate__c t : this.apTasks ){
+        for( ActionPlanTask__c t : this.apTasks ){
             if( t.Dependent__c != 'None' && t.Dependent__c != null ){
                 Integer tempIndex   	= Integer.valueOf( t.Dependent__c );
-                APTaskTemplate__c link 	= this.apTasks[tempIndex];
+                ActionPlanTask__c link 	= this.apTasks[tempIndex];
                 
                 
                 //task can not depend on themselves
@@ -138,7 +138,7 @@ public with sharing class ActionPlansUtilities{
     * @param index
     * @return Boolean 
     */
-    private Boolean dependantCycle( APTaskTemplate__c originTask, APTaskTemplate__c destinyTask, Integer index ){
+    private Boolean dependantCycle( ActionPlanTask__c originTask, ActionPlanTask__c destinyTask, Integer index ){
         
         Boolean hasDependency = false;
         Set<Integer> visitedTasks = new Set<Integer>();
@@ -156,7 +156,7 @@ public with sharing class ActionPlansUtilities{
         	
     		 if( destinyTask.Dependent__c != 'None' && destinyTask.Dependent__c != null  ){
                 Integer tempIndexDestiny 	= Integer.valueOf( destinyTask.Dependent__c );
-        		APTaskTemplate__c link 		= this.apTasks[ tempIndexDestiny ];
+        		ActionPlanTask__c link 		= this.apTasks[ tempIndexDestiny ];
         		
         		if( link.Dependent__c != 'None' ){
 	        		if( Integer.valueOf( link.Dependent__c ) == index ){
@@ -216,7 +216,7 @@ public with sharing class ActionPlansUtilities{
           try{  
 
 			//Now for each inserted AP we should run through tasks and create them
-            this.apTasksOrg = new List<APTaskTemplate__c>();
+            this.apTasksOrg = new List<ActionPlanTask__c>();
             this.apTasksOrg.addAll( this.apTasks );
             this.apTasks.clear();
 			if (actionPlan.Id == null){
@@ -244,7 +244,7 @@ public with sharing class ActionPlansUtilities{
             List<Task>  taskToDelete    = new List<Task>();
             List<Id>    deleteApttIds   = new List<Id>();
             
-            for( APTaskTemplate__c deleteAptt : this.pendingDeletes ){
+            for( ActionPlanTask__c deleteAptt : this.pendingDeletes ){
                 deleteApttIds.add(deleteAptt.Id);
             }
             //do not delete completed tasks
@@ -307,7 +307,7 @@ public with sharing class ActionPlansUtilities{
         String oName                    = ApexPages.currentPage().getParameters().get( 'refType' );
         String oIds                     = ApexPages.currentPage().getParameters().get( 'refId' );
         List<ActionPlan__c> apList      = new List<ActionPlan__c>();
-        List<APTaskTemplate__c> aptList = new List<APTaskTemplate__c>();
+        List<ActionPlanTask__c> aptList = new List<ActionPlanTask__c>();
       	Savepoint sp = Database.setSavepoint();
         
         if( ( oName != null || oName != '' ) && ( oIds != null || oIds != '' ) ){
@@ -317,7 +317,7 @@ public with sharing class ActionPlansUtilities{
 	            List<String> oIdsList = oIds.split(',');
 	
 				//Now for each inserted AP we should run through tasks and create them
-	            this.apTasksOrg = new List<APTaskTemplate__c>();
+	            this.apTasksOrg = new List<ActionPlanTask__c>();
 	            this.apTasksOrg.addAll( this.apTasks );
 	            this.apTasks.clear();
 	              
@@ -341,16 +341,16 @@ public with sharing class ActionPlansUtilities{
     
     /**
     * Saves Action Plan Instance.
-    * @return List<APTaskTemplate__c>
+    * @return List<ActionPlanTask__c>
     */
     /*
-    public List<APTaskTemplate__c> saveAPTaskObj( ActionPlan__c ap, Savepoint sp ){
+    public List<ActionPlanTask__c> saveAPTaskObj( ActionPlan__c ap, Savepoint sp ){
         
-        List<APTaskTemplate__c> aptList = new List<APTaskTemplate__c>();
+        List<ActionPlanTask__c> aptList = new List<ActionPlanTask__c>();
         
         //Now for each inserted ap we should run through tasks and create them
-            for( APTaskTemplate__c t : this.apTasksOrg ) {            	
-                APTaskTemplate__c nt = new APTaskTemplate__c();
+            for( ActionPlanTask__c t : this.apTasksOrg ) {            	
+                ActionPlanTask__c nt = new ActionPlanTask__c();
                 nt = t.clone(); 
                 nt.Action_Plan__c       = ap.Id;
                 nt.Name                 = ap.Name + ' - ' + Label.ap_DefaultTaskName;
@@ -361,11 +361,11 @@ public with sharing class ActionPlansUtilities{
         //End of Save all Task
         
         //Now run through the tasks and take care of dependents - not done in the previous because we need the Ids
-        for(APTaskTemplate__c t : aptList ){
+        for(ActionPlanTask__c t : aptList ){
             
             if( t.Dependent__c != 'None' && t.Dependent__c != null ){
                     Integer tempIndex   = Integer.valueOf( t.Dependent__c );
-                    t.APTaskTemplate__c = aptList[tempIndex].Id;
+                    t.ActionPlanTask__c = aptList[tempIndex].Id;
             }
             else{ 
                 // create due date
@@ -518,7 +518,7 @@ public with sharing class ActionPlansUtilities{
     * Gets Tasks related to an Action Plan
     * @return apTasks
     */
-    public List<APTaskTemplate__c> getTasks(){
+    public List<ActionPlanTask__c> getTasks(){
 
         if( this.apTasks == null || this.apTasks.size() == 0 ) {
             if( ApexPages.currentPage().getParameters().get( 'templateId' ) != null ){
@@ -530,7 +530,7 @@ public with sharing class ActionPlansUtilities{
                                 From ActionPlanTemplateTask__c a
                                 where a.Action_Plan_Template__c =: TempApId order by taskIndex__c ASC ];
 
-                this.apTasks = new List<APTaskTemplate__c>();
+                this.apTasks = new List<ActionPlanTask__c>();
                 
                 Action_Plans_Settings__c mySettings = this.getCustomSetting();
                 String userId; 
@@ -549,7 +549,7 @@ public with sharing class ActionPlansUtilities{
 						userId = null;
 					} 
 
-                    APTaskTemplate__c t 	= new APTaskTemplate__c();
+                    ActionPlanTask__c t 	= new ActionPlanTask__c();
                     t.Type__c           	= aptTask.Type__c;
                     t.Subject__c        	= aptTask.Subject__c;
                     t.Priority__c       	= aptTask.Priority__c;
@@ -569,7 +569,7 @@ public with sharing class ActionPlansUtilities{
                 this.apTasks = this.retrieveTaskFromExistingActionPlan( TempApId );  
                 //check reminders and set 'send email' as false
                 String tmp_remainderDefaultTime = this.getReminderDefaultTime();
-                for( APTaskTemplate__c t : this.apTasks ){
+                for( ActionPlanTask__c t : this.apTasks ){
                 	if (t.Reminder__c == null || t.Reminder__c == false){
                 		t.Minutes_Reminder__c	= tmp_remainderDefaultTime;
                 	}
@@ -577,8 +577,8 @@ public with sharing class ActionPlansUtilities{
                 }  
             }
             else{
-                this.apTasks        	= new List<APTaskTemplate__c>();
-                APTaskTemplate__c t 	= new APTaskTemplate__c();
+                this.apTasks        	= new List<ActionPlanTask__c>();
+                ActionPlanTask__c t 	= new ActionPlanTask__c();
                 t.Reminder__c 			= false;
                 t.Minutes_Reminder__c 	= this.getReminderDefaultTime();
                 this.apTasks.add( t );
@@ -586,12 +586,12 @@ public with sharing class ActionPlansUtilities{
             
             // Clone. Clear Ids.
             if( ApexPages.currentPage().getParameters().get( 'clone' ) == '1' ){ 
-                List<APTaskTemplate__c> tC = this.apTasks.deepClone(false);
+                List<ActionPlanTask__c> tC = this.apTasks.deepClone(false);
                 this.apTasks.clear();
                 this.apTasks = tC;
                 
                 // clear task relations
-                for( APTaskTemplate__c t : this.apTasks ){
+                for( ActionPlanTask__c t : this.apTasks ){
                     t.Action_Plan__c = null;
                 }
             }
@@ -610,7 +610,7 @@ public with sharing class ActionPlansUtilities{
        		errorMsg = Label.ap_Errors_TaskLimitError;
        	}
        	else{
-       		APTaskTemplate__c t 	= new APTaskTemplate__c();
+       		ActionPlanTask__c t 	= new ActionPlanTask__c();
             t.Reminder__c 			= false;
             t.Minutes_Reminder__c	= this.getReminderDefaultTime();
             t.Name 					= null;
@@ -618,7 +618,7 @@ public with sharing class ActionPlansUtilities{
            
             // validate user, priority, subject and days before adding another
             Action_Plans_Settings__c mySettings = this.getCustomSetting();
-            for( APTaskTemplate__c apt : apTasks ) {
+            for( ActionPlanTask__c apt : apTasks ) {
             	
             	hasNoErrors = ( ( apt.User__c != null || mySettings.Unassigned_Task_Default__c ) && apt.Subject__c != null );
             	if( apt.DaysFromStart__c < 1 ) { apt.DaysFromStart__c = 1; }
@@ -640,10 +640,10 @@ public with sharing class ActionPlansUtilities{
             Integer taskIndex       = Integer.valueOf( ApexPages.currentPage().getParameters().get( 'remove' ) );
             
             //check for dependent children and clear them since the parent is being removed.
-            apTasks[ taskIndex ].APTaskTemplate__c    = null;
+            apTasks[ taskIndex ].ActionPlanTask__c    = null;
             apTasks[ taskIndex ].Dependent__c         = null;
             
-            APTaskTemplate__c apTask;
+            ActionPlanTask__c apTask;
             Integer dependentApTask;
 
             //update the current dependent position from tasks below of deleted one.
@@ -655,7 +655,7 @@ public with sharing class ActionPlansUtilities{
             			apTask.Dependent__c = String.valueOf( dependentApTask - 1 );	
             		}else if( dependentApTask == taskIndex ){
             			apTask.Dependent__c 		= 'None';
-            			apTask.APTaskTemplate__c    = null;
+            			apTask.ActionPlanTask__c    = null;
             		}
             	}
             }
@@ -663,7 +663,7 @@ public with sharing class ActionPlansUtilities{
             // before remove check if it's exists in the DB, if so, add to pendingDeletes to be deleted on save.
             if( this.apTasks[taskIndex].Id != null ){
                 if( pendingDeletes == null ){
-                    pendingDeletes = new List<APTaskTemplate__c>();
+                    pendingDeletes = new List<ActionPlanTask__c>();
                 } 
                 pendingDeletes.add( this.apTasks[taskIndex] );
             }
@@ -700,7 +700,7 @@ public with sharing class ActionPlansUtilities{
         integer i = 0;
         
         if( this.apTasks != null ){
-            for( APTaskTemplate__c t : this.apTasks ){
+            for( ActionPlanTask__c t : this.apTasks ){
                 if( t.Subject__c != null ){
                      options.add(new SelectOption( string.valueOf(i), t.Subject__c+' ('+ (i+1) +')') );
                 }
@@ -717,11 +717,11 @@ public with sharing class ActionPlansUtilities{
     */
     public Integer getCompleted(){
         
-        List<APTaskTemplate__c> ts = new List<APTaskTemplate__c>();
+        List<ActionPlanTask__c> ts = new List<ActionPlanTask__c>();
         String tempApId = ApexPages.currentPage().getParameters().get('Id');
         
         ts = [ select t.Id 
-                From APTaskTemplate__c t 
+                From ActionPlanTask__c t 
                 where t.Status__c = 'Completed' and t.ActivityDate__c != null and t.Action_Plan__c =: tempApId ];
         
         return ( ts != null ) ? ts.size() : 0;
@@ -925,14 +925,14 @@ public with sharing class ActionPlansUtilities{
     
     /**
     * Return a map the task associated with a value in the TaskTemplateId__c in sobject task.
-    * @param aptTasks	a list of APTaskTemplate__c custom object 
+    * @param aptTasks	a list of ActionPlanTask__c custom object 
     * @return 			a map with key equals TaskTemplateId__c field an value the task associated.
     */
     /*
-    private Map<Id,Task> getTasksFromAPTaskTemplates( List<APTaskTemplate__c> aptTasks ){
+    private Map<Id,Task> getTasksFromAPTaskTemplates( List<ActionPlanTask__c> aptTasks ){
     	
     	Set<Id> aPTTempIdsSet = new Set<Id>();
-		for( APTaskTemplate__c apTask : aptTasks ){
+		for( ActionPlanTask__c apTask : aptTasks ){
 			aPTTempIdsSet.add( apTask.Id );
 		}
 		
@@ -1012,15 +1012,15 @@ public with sharing class ActionPlansUtilities{
   	* @parms actionPlanId
   	* @return myList
   	*/
-  	public List<APTaskTemplate__c> retrieveTaskFromExistingActionPlan( String actionPlanId ){
+  	public List<ActionPlanTask__c> retrieveTaskFromExistingActionPlan( String actionPlanId ){
   		
-  		List<APTaskTemplate__c> myList = new List<APTaskTemplate__c>();
+  		List<ActionPlanTask__c> myList = new List<ActionPlanTask__c>();
   		myList = [ select a.Type__c, a.Subject__c, a.ActivityDate__c, a.Priority__c, a.Status__c, a.Dependent__c, 
                     a.Name, a.User__c, a.User__r.Name, a.Id, a.DaysFromStart__c, a.CreatedById, a.APTaskTemplate__r.Name, 
-                    a.APTaskTemplate__r.Subject__c, a.APTaskTemplate__c, a.Action_Plan__c, a.Reminder__c,
+                    a.APTaskTemplate__r.Subject__c, a.ActionPlanTask__c, a.Action_Plan__c, a.Reminder__c,
                     a.SendEmail__c, a.Comments__c, a.Minutes_Reminder__c , a.taskIndex__c, a.Time_Reminder__c,
                		a.DueDateRelation__c, a.RelatedDatefield__c, a.CreateTaskWhen__c, a.AssignToType__c
-                    from APTaskTemplate__c a 
+                    from ActionPlanTask__c a 
                     where a.Action_Plan__c =: actionPlanId order by a.taskIndex__c asc ];
   		return myList;
   	}
@@ -1138,12 +1138,12 @@ public with sharing class ActionPlansUtilities{
     	Boolean result = true;
     	set<string> rejectStatus = new set<string>{'In progress','Not Started','Deferred','Waiting on someone else'};
 	
-    	List<APTaskTemplate__c> aptList =  [select  a.Status__c,a.APTaskTemplate__r.Id,a.APTaskTemplate__r.Status__c
-                         					 from APTaskTemplate__c a 
+    	List<ActionPlanTask__c> aptList =  [select  a.Status__c,a.APTaskTemplate__r.Id,a.APTaskTemplate__r.Status__c
+                         					 from ActionPlanTask__c a 
                          					 where a.Id =: apTaskId  
 					 					];
 		if (aptList.size() > 0){
-			if (aptList[0].APTaskTemplate__c !=null ){
+			if (aptList[0].ActionPlanTask__c !=null ){
 				
 				if (rejectStatus.contains(aptList[0].APTaskTemplate__r.Status__c))
 					result = false;

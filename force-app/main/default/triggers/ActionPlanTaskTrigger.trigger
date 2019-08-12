@@ -45,21 +45,21 @@ trigger ActionPlanTaskTrigger on Task ( after update, after delete , before dele
 	        ActionPlansTaskTriggerUtilities.updateAPTasksStatus( inProgressTasks );
 	    }
 	    
-	       //Query APTaskTemplate__c objects to update fields
+	       //Query ActionPlanTask__c objects to update fields
 	    if (APTasksIds.size()>0){
-			Map<String,APTaskTemplate__c> mapAPTasks = new Map<String,APTaskTemplate__c>();
-			List<APTaskTemplate__c> aptList =  [select  a.Status__c,a.Id,a.APTaskTemplate__r.Status__c,a.ActivityDate__c,a.Minutes_Reminder__c
-											from APTaskTemplate__c a 
+			Map<String,ActionPlanTask__c> mapAPTasks = new Map<String,ActionPlanTask__c>();
+			List<ActionPlanTask__c> aptList =  [select  a.Status__c,a.Id,a.APTaskTemplate__r.Status__c,a.ActivityDate__c,a.Minutes_Reminder__c
+											from ActionPlanTask__c a 
 											where a.Id in: APTasksIds ];
 	    	//create a MAP with APTask id, and APTask object						
-	    	for(APTaskTemplate__c apt : aptList){
+	    	for(ActionPlanTask__c apt : aptList){
 	    		mapAPTasks.put(apt.Id, apt);
 	    	}
 
 			//update the Action plan with changes from the tasks results
-			List<APTaskTemplate__c> lUpsert = new List<APTaskTemplate__c>();
-			APTaskTemplate__c tmp ;
-			Integer taskTemplateNameLength	= APTaskTemplate__c.Name.getDescribe().getLength();
+			List<ActionPlanTask__c> lUpsert = new List<ActionPlanTask__c>();
+			ActionPlanTask__c tmp ;
+			Integer taskTemplateNameLength	= ActionPlanTask__c.Name.getDescribe().getLength();
 			for( Task t : Trigger.new ) {
 				tmp = mapAPTasks.get(t.TaskTemplateId__c);
 				if (tmp != null){
@@ -92,8 +92,8 @@ trigger ActionPlanTaskTrigger on Task ( after update, after delete , before dele
 	   		}
 	   		//only delete Action Plan Template Tasks that are not deleted
 			
-			for( APTaskTemplate__c ta : [select  a.Id ,a.Action_Plan__c 
-										from APTaskTemplate__c a 
+			for( ActionPlanTask__c ta : [select  a.Id ,a.Action_Plan__c 
+										from ActionPlanTask__c a 
 										where id  in: taskTempIds and isDeleted = false  ALL ROWS ] ){
 	        	finalIds.add( ta.Id );
 	   		}									
@@ -101,7 +101,7 @@ trigger ActionPlanTaskTrigger on Task ( after update, after delete , before dele
 	   		if (finalIds.size()>0){
 	   			  if (ProcessorControl.inBatchContext){
 		        	//delete 
-		        	delete [select aPT.id from APTaskTemplate__c aPT where aPT.id in : finalIds];
+		        	delete [select aPT.id from ActionPlanTask__c aPT where aPT.id in : finalIds];
 		       	}else{
 		        	ActionPlansTaskTriggerUtilities.deleteAPTasks( finalIds );
 		        }

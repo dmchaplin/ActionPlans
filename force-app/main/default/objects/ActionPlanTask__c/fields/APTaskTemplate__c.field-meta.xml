@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>APTaskTemplate__c</fullName>
+    <fullName>ActionPlanTask__c</fullName>
     <externalId>false</externalId>
     <label>Task Dependency</label>
-    <referenceTo>APTaskTemplate__c</referenceTo>
+    <referenceTo>ActionPlanTask__c</referenceTo>
     <relationshipLabel>AP Tasks</relationshipLabel>
     <relationshipName>R00NR0000000VcWbMAK</relationshipName>
     <required>false</required>

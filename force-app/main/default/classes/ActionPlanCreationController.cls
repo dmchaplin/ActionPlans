@@ -106,14 +106,14 @@ public with sharing class ActionPlanCreationController{
         this.actionPlan.StartDate__c    = Date.today();
         this.actionPlans = new ActionPlansUtilities( this.actionPlan );
         
-        List<APTaskTemplate__c> tcAux   = this.actionPlans.getTasks();
-        List<APTaskTemplate__c> tC      = this.actionPlans.apTasks.deepClone( false );
+        List<ActionPlanTask__c> tcAux   = this.actionPlans.getTasks();
+        List<ActionPlanTask__c> tC      = this.actionPlans.apTasks.deepClone( false );
         
         this.actionPlans.apTasks.clear();
         this.actionPlans.apTasks = tC;
         
         // clear task relations
-        for( APTaskTemplate__c t : this.actionPlans.apTasks ){
+        for( ActionPlanTask__c t : this.actionPlans.apTasks ){
             t.Action_Plan__c = null;
         }
     }
@@ -275,7 +275,7 @@ public with sharing class ActionPlanCreationController{
     
     /**
     * Method which retrieves all tasks for a Action Plan
-    * @return List<APTaskTemplate__c>
+    * @return List<ActionPlanTask__c>
     */
     public List<ApTaskWrapper> getTasks(){
         
@@ -289,7 +289,7 @@ public with sharing class ActionPlanCreationController{
             Integer i = 0;
             
             
-            for( APTaskTemplate__c aptTaskTemplate : actionPlans.getTasks( )){
+            for( ActionPlanTask__c aptTaskTemplate : actionPlans.getTasks( )){
                 //check if the lookUp has to be shown
                 if (aptTaskTemplate.Name != null && aptTaskTemplate.Name !=''){
                     tmpAptask = this.mapTasksListBkp.get(aptTaskTemplate.Name);
@@ -491,11 +491,11 @@ public with sharing class ActionPlanCreationController{
     */
     public Double calculateAPTaskIndexValue(){
         
-        List<APTaskTemplate__c> apTasks = [ select Id, taskIndex__c from APTaskTemplate__c 
+        List<ActionPlanTask__c> apTasks = [ select Id, taskIndex__c from ActionPlanTask__c 
                                                 where Action_Plan__c =: this.actionPlanId ];
         
         Double maxIndex = 0;
-        for( APTaskTemplate__c tsk : apTasks ){
+        for( ActionPlanTask__c tsk : apTasks ){
             if( tsk.taskIndex__c > maxIndex ){
                 maxIndex = tsk.taskIndex__c;
             }
@@ -545,13 +545,13 @@ public with sharing class ActionPlanCreationController{
     */
     public class ApTaskWrapper{
         
-        public APTaskTemplate__c task       { get; set; }
+        public ActionPlanTask__c task       { get; set; }
         public  Integer     position        { get; set; }
         public  Boolean     isLast          { get; set; }
         public  Boolean     displayLookUp   { get; set; }
         public  Boolean     userRequired    { get; set; }
         
-        public ApTaskWrapper( APTaskTemplate__c apTask, Integer pos, Boolean looKp, Boolean userReq ){
+        public ApTaskWrapper( ActionPlanTask__c apTask, Integer pos, Boolean looKp, Boolean userReq ){
             task            = apTask;
             position        = pos;
             isLast          = false;
@@ -614,7 +614,7 @@ public with sharing class ActionPlanCreationController{
         actionPlan.Contact__c   = contact.Id;
         actionPlan.StartDate__c = Date.today();
         
-        APTaskTemplate__c apTask = new APTaskTemplate__c();
+        ActionPlanTask__c apTask = new ActionPlanTask__c();
         
         apTask.Subject__c           = testUtil.createRandomWord();
         apTask.User__c              = testUtil.createTestUser().Id;
@@ -627,7 +627,7 @@ public with sharing class ActionPlanCreationController{
         System.currentPageReference().getParameters().put( 'refType', 'Contact' );
         ActionPlanCreationController apCreateController = new ActionPlanCreationController( new Apexpages.StandardController( actionPlan ) );
         
-        apCreateController.actionPlans.apTasks = new List<APTaskTemplate__c>();
+        apCreateController.actionPlans.apTasks = new List<ActionPlanTask__c>();
         apCreateController.actionPlans.apTasks.add( apTask );
         apCreateController.save();
         
@@ -659,7 +659,7 @@ public with sharing class ActionPlanCreationController{
         actionPlan.Contact__c   = contact.Id;
         actionPlan.StartDate__c = Date.today();
         
-        APTaskTemplate__c apTask = new APTaskTemplate__c();
+        ActionPlanTask__c apTask = new ActionPlanTask__c();
         
         apTask.Subject__c           = testUtil.createRandomWord();
         apTask.User__c              = testUtil.createTestUser().Id;
@@ -672,7 +672,7 @@ public with sharing class ActionPlanCreationController{
         System.currentPageReference().getParameters().put( 'refType', 'Contact' );
         ActionPlanCreationController apCreateController = new ActionPlanCreationController( new Apexpages.StandardController( actionPlan ) );
         
-        apCreateController.actionPlans.apTasks = new List<APTaskTemplate__c>();
+        apCreateController.actionPlans.apTasks = new List<ActionPlanTask__c>();
         apCreateController.actionPlans.apTasks.add( apTask );
         apCreateController.saveAndNew();
         Test.StopTest();
@@ -708,7 +708,7 @@ public with sharing class ActionPlanCreationController{
         ActionPlansTestUtilities testUtil   = new ActionPlansTestUtilities();
         ActionPlan__c actionPlan            = testUtil.createNewActionPlan( 'accounts', 2 );
         
-        APTaskTemplate__c apTask = new APTaskTemplate__c();
+        ActionPlanTask__c apTask = new ActionPlanTask__c();
         
         apTask.Action_Plan__c       = actionPlan.Id;
         apTask.Subject__c           = testUtil.createRandomWord();
@@ -720,7 +720,7 @@ public with sharing class ActionPlanCreationController{
         System.currentPageReference().getParameters().put( 'id', null );
         System.currentPageReference().getParameters().put( 'add', '1' );
         ActionPlanCreationController apCreateController = new ActionPlanCreationController( new Apexpages.StandardController( actionPlan ) );
-        apCreateController.actionPlans.apTasks = new List<APTaskTemplate__c>();
+        apCreateController.actionPlans.apTasks = new List<ActionPlanTask__c>();
         apCreateController.actionPlans.apTasks.add( apTask );
         apCreateController.addTask();
         
@@ -739,9 +739,9 @@ public with sharing class ActionPlanCreationController{
         ActionPlanCreationController apCreateController = new ActionPlanCreationController( new Apexpages.StandardController( actionPlan ) );
         apCreateController.actionPlans.apTasks = [ select a.Type__c, a.Subject__c, a.ActivityDate__c, a.Priority__c, a.Status__c, a.Dependent__c, 
                                                         a.Name, a.User__c, a.User__r.Name, a.Id, a.DaysFromStart__c, a.CreatedById, a.APTaskTemplate__r.Name, 
-                                                        a.APTaskTemplate__r.Subject__c, a.APTaskTemplate__c, a.Action_Plan__c, a.Reminder__c, 
+                                                        a.APTaskTemplate__r.Subject__c, a.ActionPlanTask__c, a.Action_Plan__c, a.Reminder__c, 
                                                         a.SendEmail__c, a.Comments__c 
-                                                        from APTaskTemplate__c a 
+                                                        from ActionPlanTask__c a 
                                                         where a.Action_Plan__c =: actionPlan.Id order by a.createdDate asc ];
                                     
         apCreateController.removeTask();
@@ -797,9 +797,9 @@ public with sharing class ActionPlanCreationController{
         ActionPlanCreationController apCreateController = new ActionPlanCreationController( new Apexpages.StandardController( actionPlan ) );
         apCreateController.actionPlans.apTasks = [ select a.Type__c, a.Subject__c, a.ActivityDate__c, a.Priority__c, a.Status__c, a.Dependent__c, 
                                                         a.Name, a.User__c, a.User__r.Name, a.Id, a.DaysFromStart__c, a.CreatedById, a.APTaskTemplate__r.Name, 
-                                                        a.APTaskTemplate__r.Subject__c, a.APTaskTemplate__c, a.Action_Plan__c, a.Reminder__c, 
+                                                        a.APTaskTemplate__r.Subject__c, a.ActionPlanTask__c, a.Action_Plan__c, a.Reminder__c, 
                                                         a.SendEmail__c, a.Comments__c 
-                                                        from APTaskTemplate__c a 
+                                                        from ActionPlanTask__c a 
                                                         where a.Action_Plan__c =: actionPlan.Id order by a.createdDate asc ];
                                                         
         List<Selectoption> options = apCreateController.getSubjectItems();
@@ -818,9 +818,9 @@ public with sharing class ActionPlanCreationController{
         
         ActionPlan__c actionPlan = testUtil.createNewActionPlan( 'accounts', 0 );
         
-        APTaskTemplate__c newAPTask1 = new APTaskTemplate__c();
-        APTaskTemplate__c newAPTask2 = new APTaskTemplate__c();
-        APTaskTemplate__c newAPTask3 = new APTaskTemplate__c();
+        ActionPlanTask__c newAPTask1 = new ActionPlanTask__c();
+        ActionPlanTask__c newAPTask2 = new ActionPlanTask__c();
+        ActionPlanTask__c newAPTask3 = new ActionPlanTask__c();
         
         newAPTask1.Subject__c           = testUtil.createRandomWord();
         newAPTask1.DaysFromStart__c     = 2;
@@ -849,7 +849,7 @@ public with sharing class ActionPlanCreationController{
         System.currentPageReference().getParameters().put( 'id', actionPlan.Id );
         ActionPlanCreationController apCreateController = new ActionPlanCreationController( new Apexpages.StandardController( actionPlan ) );
         
-        apCreateController.actionPlans.apTasks = new List<APTaskTemplate__c>();
+        apCreateController.actionPlans.apTasks = new List<ActionPlanTask__c>();
         apCreateController.actionPlans.apTasks.add( newAPTask1 );
         apCreateController.actionPlans.apTasks.add( newAPTask2 );
         apCreateController.actionPlans.apTasks.add( newAPTask3 );
@@ -869,9 +869,9 @@ public with sharing class ActionPlanCreationController{
         
         ActionPlan__c actionPlan = testUtil.createNewActionPlan( 'accounts', 0 );
         
-        APTaskTemplate__c newAPTask1 = new APTaskTemplate__c();
-        APTaskTemplate__c newAPTask2 = new APTaskTemplate__c();
-        APTaskTemplate__c newAPTask3 = new APTaskTemplate__c();
+        ActionPlanTask__c newAPTask1 = new ActionPlanTask__c();
+        ActionPlanTask__c newAPTask2 = new ActionPlanTask__c();
+        ActionPlanTask__c newAPTask3 = new ActionPlanTask__c();
         
         newAPTask1.Subject__c           = testUtil.createRandomWord();
         newAPTask1.DaysFromStart__c     = 2;
@@ -894,7 +894,7 @@ public with sharing class ActionPlanCreationController{
         System.currentPageReference().getParameters().put( 'id', actionPlan.Id );
         ActionPlanCreationController apCreateController = new ActionPlanCreationController( new Apexpages.StandardController( actionPlan ) );
         
-        apCreateController.actionPlans.apTasks = new List<APTaskTemplate__c>();
+        apCreateController.actionPlans.apTasks = new List<ActionPlanTask__c>();
         apCreateController.actionPlans.apTasks.add( newAPTask1 );
         apCreateController.actionPlans.apTasks.add( newAPTask2 );
         apCreateController.actionPlans.apTasks.add( newAPTask3 );

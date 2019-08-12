@@ -33,10 +33,10 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 public with sharing class ActionPlansBatchBuilderUtilities {
     private List<SObject> relObjects                { get; set; }
     private ActionPlan__c baseAPlan                 { get; set; }
-    private List<APTaskTemplate__c> baseAPTaskList  { get; set; }
+    private List<ActionPlanTask__c> baseAPTaskList  { get; set; }
      
     private List<ActionPlan__c> relActionPlans      { get; set; }
-    private List<APTaskTemplate__c> relAPTaskList   { get; set; }
+    private List<ActionPlanTask__c> relAPTaskList   { get; set; }
     
     private String tmpRefType                      { get; set; }
     private List<String> tmpOIdsLIst               { get; set; }
@@ -50,7 +50,7 @@ public with sharing class ActionPlansBatchBuilderUtilities {
     
     
     //constructor
-    public ActionPlansBatchBuilderUtilities(ActionPlan__c baseObj,List<APTaskTemplate__c> aPTList, String refType, List<String> oIdsLIst){
+    public ActionPlansBatchBuilderUtilities(ActionPlan__c baseObj,List<ActionPlanTask__c> aPTList, String refType, List<String> oIdsLIst){
     
 		baseAPlan  = baseObj;
 		baseAPTaskList = aPTList;
@@ -110,19 +110,19 @@ public with sharing class ActionPlansBatchBuilderUtilities {
     
      public  void generateActionPlans() {
         
-		List<APTaskTemplate__c> aptList 		= null;
-		List<APTaskTemplate__c> aptTOTALList 	= new List<APTaskTemplate__c>();
+		List<ActionPlanTask__c> aptList 		= null;
+		List<ActionPlanTask__c> aptTOTALList 	= new List<ActionPlanTask__c>();
 		List<String> aptTOTALListId 			= new List<String>();
-		Map<String,APTaskTemplate__c> mapAP 	= new Map<String,APTaskTemplate__c>();
+		Map<String,ActionPlanTask__c> mapAP 	= new Map<String,ActionPlanTask__c>();
 		Map<String,ActionPlan__c> mapIDAP 		= new Map<String,ActionPlan__c>();
 		ActionPlan__c apAux;
         Map<String,Task> mapApTasks 			= new Map<String,Task>();
-        Integer taskTemplateNameLength			= APTaskTemplate__c.Name.getDescribe().getLength();
+        Integer taskTemplateNameLength			= ActionPlanTask__c.Name.getDescribe().getLength();
         
         this.myOldTasksWithEmail    = new List<Task>();
         this.myNewTasksWithEmail    = new List<Task>();
         this.myTasksWithOutEmail    = new List<Task>();
-        this.relAPTaskList          = new List<APTaskTemplate__c>();
+        this.relAPTaskList          = new List<ActionPlanTask__c>();
 
 		ActionPlansUtilities apUtil = new ActionPlansUtilities( baseAPlan);
 		apUtil.retrieveOwnersDataRelatedObject( tmpOIdsLIst, tmpRefType );
@@ -134,12 +134,12 @@ public with sharing class ActionPlansBatchBuilderUtilities {
 		for(ActionPlan__c ap :  this.relActionPlans){
 			
 			mapIDAP.put(ap.Id,ap);
-			aptList = new List<APTaskTemplate__c>();
+			aptList = new List<ActionPlanTask__c>();
 			//Now for each inserted ap we should run through tasks and create them
 			if (this.mode != 'edit'){
 				String taskName = Label.ap_DefaultTaskName;
-				for( APTaskTemplate__c t : this.baseAPTaskList ) {               
-				    APTaskTemplate__c nt = new APTaskTemplate__c();
+				for( ActionPlanTask__c t : this.baseAPTaskList ) {               
+				    ActionPlanTask__c nt = new ActionPlanTask__c();
 				    nt = t.clone(); 
 				    nt.Action_Plan__c       = ap.Id;
 				    nt.Name                 = t.Subject__c.substring( 0, math.min( taskTemplateNameLength, t.Subject__c.length() ) ) ;
@@ -150,7 +150,7 @@ public with sharing class ActionPlansBatchBuilderUtilities {
 				upsert aptList;
                     
 			}else{
-				for( APTaskTemplate__c t : this.baseAPTaskList ) {
+				for( ActionPlanTask__c t : this.baseAPTaskList ) {
 					t.DaysFromStart__c     = ( t.DaysFromStart__c < 1 ) ? 1 : t.DaysFromStart__c;
 					t.Name                 = t.Subject__c.substring( 0, math.min( taskTemplateNameLength, t.Subject__c.length() ) ) ;
 				}  
@@ -159,7 +159,7 @@ public with sharing class ActionPlansBatchBuilderUtilities {
 			//End of Save all Task
 			
 			//Now run through the tasks and take care of dependents - not done in the previous because we need the Ids
-			for(APTaskTemplate__c t : aptList ){
+			for(ActionPlanTask__c t : aptList ){
                     
 				aptTOTALListId.add(t.Id);
                     
@@ -173,12 +173,12 @@ public with sharing class ActionPlansBatchBuilderUtilities {
 
 				if( t.Dependent__c != 'None' && t.Dependent__c != null ){
 					Integer tempIndex   = Integer.valueOf( t.Dependent__c );
-					t.APTaskTemplate__c = aptList[tempIndex].Id;
+					t.ActionPlanTask__c = aptList[tempIndex].Id;
 					t.ActivityDate__c = null;    
 				}
 				else{ 
                         
-					t.APTaskTemplate__c = null;
+					t.ActionPlanTask__c = null;
 					// create due date, calculate the due date of the tasks for skip weekends feature
 					   
 					//set dependency taskId to none if none was selected
@@ -228,7 +228,7 @@ public with sharing class ActionPlansBatchBuilderUtilities {
         }
                
 		Task t;
-		for( APTaskTemplate__c t_t : aptTOTALList ) {  
+		for( ActionPlanTask__c t_t : aptTOTALList ) {  
 			// check if task exists already
 			t = mapApTasks.get( t_t.Id); 
 			if (t == null){
@@ -255,7 +255,7 @@ public with sharing class ActionPlansBatchBuilderUtilities {
 			    t.isReminderSet = false;
 			}              
              
-			APTaskTemplate__c apt = mapAP.get(t_t.Id); 
+			ActionPlanTask__c apt = mapAP.get(t_t.Id); 
 			if ( apt != null ){
 			    apAux = mapIDAP.get(apt.Action_Plan__c);
 			}

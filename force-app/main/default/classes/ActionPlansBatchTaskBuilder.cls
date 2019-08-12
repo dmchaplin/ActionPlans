@@ -32,7 +32,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 global with sharing class ActionPlansBatchTaskBuilder implements Database.Batchable<SObject>, Database.Stateful{
     
-    private List<APTaskTemplate__c> apTasks             { get; set; }
+    private List<ActionPlanTask__c> apTasks             { get; set; }
     private List<String>            aptIds              { get; set; }
     private List<Task>              myTasksWithOutEmail { get; set; }
     private List<Task>              myTasksWithEmail    { get; set; }
@@ -45,7 +45,7 @@ global with sharing class ActionPlansBatchTaskBuilder implements Database.Batcha
     }
     
     /**
-    * QueryLocator: Select the List of APTaskTemplate__c.
+    * QueryLocator: Select the List of ActionPlanTask__c.
     */
     global Database.QueryLocator start( Database.BatchableContext bc ){
         //Add Action Plan custom object reference Field.
@@ -54,7 +54,7 @@ global with sharing class ActionPlansBatchTaskBuilder implements Database.Batcha
                       'a.Action_Plan__c, a.Action_Plan__r.Account__c , a.Action_Plan__r.Contact__c, '+
                       'a.Action_Plan__r.Campaign__c , a.Action_Plan__r.Case__c , a.Action_Plan__r.Contract__c, '+
                       'a.Action_Plan__r.Lead__c, a.Action_Plan__r.Opportunity__c, '+
-                      'a.APTaskTemplate__c From APTaskTemplate__c a Where a.Id IN ';
+                      'a.ActionPlanTask__c From ActionPlanTask__c a Where a.Id IN ';
         String inClause = '(';
         for( String iter : this.aptIds ){
             inClause += '\'' + iter + '\',';
@@ -75,15 +75,15 @@ global with sharing class ActionPlansBatchTaskBuilder implements Database.Batcha
         
         this.myTasksWithEmail       = new List<Task>();
         this.myTasksWithOutEmail    = new List<Task>();
-        this.apTasks                = new List<APTaskTemplate__c>();
+        this.apTasks                = new List<ActionPlanTask__c>();
         
         for( SObject obj : data ){
-               APTaskTemplate__c oneData = ( APTaskTemplate__c )obj;
+               ActionPlanTask__c oneData = ( ActionPlanTask__c )obj;
                this.apTasks.add( oneData );
         }
 
         //Now run this magic!
-        for( APTaskTemplate__c apTask : this.apTasks ){
+        for( ActionPlanTask__c apTask : this.apTasks ){
             
             // check if task exists already
             Task t = new Task();

@@ -37,7 +37,7 @@ global with sharing class ActionPlansBatchBuilder implements Database.Batchable<
      /**
     * Constructor
     */
-    public ActionPlansBatchBuilder(ActionPlan__c baseObj,List<APTaskTemplate__c> aPTList, String refType, List<String> oIdsLIst){
+    public ActionPlansBatchBuilder(ActionPlan__c baseObj,List<ActionPlanTask__c> aPTList, String refType, List<String> oIdsLIst){
          
          taskBatch = new ActionPlansBatchBuilderUtilities(baseObj,aPTList, refType,oIdsList);
             
