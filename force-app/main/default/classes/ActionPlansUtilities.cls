@@ -525,7 +525,7 @@ public with sharing class ActionPlansUtilities{
                 String tempApId = ApexPages.currentPage().getParameters().get( 'templateId' );
                  
                 aptTasks = [ select a.Type__c, a.Subject__c, a.Priority__c, a.Dependent__c, a.Name, a.User__c, a.User__r.Name, a.Id, 
-                                a.DaysFromStart__c, a.CreatedById, a.Action_Plan_Template__c, a.ActionPlanTemplateTask__r.Subject__c, 
+                                a.DaysFromStart__c, a.CreatedById, a.Action_Plan_Template__c, a.ActionPlanTemplateTasks__r.Subject__c, 
                                 a.Reminder__c, a.SendEmail__c, a.Comments__c, a.taskIndex__c
                                 From ActionPlanTemplateTask__c a
                                 where a.Action_Plan_Template__c =: TempApId order by taskIndex__c ASC ];
