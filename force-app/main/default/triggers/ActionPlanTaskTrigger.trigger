@@ -48,7 +48,7 @@ trigger ActionPlanTaskTrigger on Task ( after update, after delete , before dele
 	       //Query ActionPlanTask__c objects to update fields
 	    if (APTasksIds.size()>0){
 			Map<String,ActionPlanTask__c> mapAPTasks = new Map<String,ActionPlanTask__c>();
-			List<ActionPlanTask__c> aptList =  [select  a.Status__c,a.Id,a.APTaskTemplate__r.Status__c,a.ActivityDate__c,a.Minutes_Reminder__c
+			List<ActionPlanTask__c> aptList =  [select  a.Status__c,a.Id,a.ActionPlanTask__r.Status__c,a.ActivityDate__c,a.Minutes_Reminder__c
 											from ActionPlanTask__c a 
 											where a.Id in: APTasksIds ];
 	    	//create a MAP with APTask id, and APTask object						

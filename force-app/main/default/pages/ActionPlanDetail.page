@@ -117,7 +117,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
                             <apex:outputText value="{!task.DueDateRelation__c}" />
                         </apex:column>
                         <apex:column id="dependency" headerValue="{!$ObjectType.ActionPlanTask__c.fields.ActionPlanTask__c.label}" headerClass="dependencyColumn">
-                            <apex:outputText >{!task.APTaskTemplate__r.Subject__c}</apex:outputText>
+                            <apex:outputText >{!task.ActionPlanTask__r.Subject__c}</apex:outputText>
                         </apex:column>
                         <apex:column value="{!task.DaysFromStart__c}" headerClass="daysCol">
                             <apex:facet name="header">{!$ObjectType.ActionPlanTask__c.fields.DaysFromStart__c.label}

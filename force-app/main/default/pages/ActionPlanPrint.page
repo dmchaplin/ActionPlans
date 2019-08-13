@@ -91,7 +91,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 				   		<apex:outputText id="subject">{!task.Subject__c}</apex:outputText>
 				   </apex:column>
 	               <apex:column id="dependency" headerValue="{!$ObjectType.ActionPlanTask__c.fields.ActionPlanTask__c.label}" headerClass="dependencyColumn">
-	               		<apex:outputText >{!task.APTaskTemplate__r.Subject__c}</apex:outputText>
+	               		<apex:outputText >{!task.ActionPlanTask__r.Subject__c}</apex:outputText>
 	               </apex:column>
 	               <apex:column headerValue="{!$ObjectType.ActionPlanTask__c.fields.ActivityDate__c.label}" >
 	                   <span style="color:#cc0000"><apex:outputField value="{!task.ActivityDate__c}" rendered="{!IF(task.ActivityDate__c < TODAY() && task.Status__c != 'Completed', true, false)}" /></span>

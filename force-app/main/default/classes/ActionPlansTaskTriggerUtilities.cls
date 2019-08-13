@@ -121,7 +121,7 @@ public with sharing class ActionPlansTaskTriggerUtilities {
                                  a.Action_Plan__r.Contract__c, a.Action_Plan__r.Case__c, a.Action_Plan__r.Campaign__c ,
                                  a.Action_Plan__r.StartDate__c, a.Action_Plan__c, a.Type__c, a.Subject__c, a.ActivityDate__c, 
                                  a.Dependent__c, a.Name, a.User__c, a.User__r.Name, a.Id, a.DaysFromStart__c, a.CreatedById,
-                                 a.APTaskTemplate__r.Subject__c, a.ActionPlanTask__c, a.SendEmail__c,  a.APTaskTemplate__r.Name, 
+                                 a.ActionPlanTask__r.Subject__c, a.ActionPlanTask__c, a.SendEmail__c,  a.ActionPlanTask__r.Name, 
                                  a.Reminder__c, a.Comments__c, a.Minutes_Reminder__c
                           from ActionPlanTask__c a where a.ActionPlanTask__c IN : this.closedTasks ];                         
     }
@@ -281,10 +281,10 @@ public with sharing class ActionPlansTaskTriggerUtilities {
      
      private Date getCompletedATPTaskDate( String aptTaskId ){
 		Date d;
-		ActionPlanTask__c lAPT = [Select APTaskTemplate__r.id, APTaskTemplate__r.ActivityDate__c from ActionPlanTask__c where id =: aptTaskId];
+		ActionPlanTask__c lAPT = [Select ActionPlanTask__r.id, ActionPlanTask__r.ActivityDate__c from ActionPlanTask__c where id =: aptTaskId];
 		
-		if ( lAPT != null &&  lAPT.APTaskTemplate__r.ActivityDate__c != null){
-			d = lAPT.APTaskTemplate__r.ActivityDate__c;
+		if ( lAPT != null &&  lAPT.ActionPlanTask__r.ActivityDate__c != null){
+			d = lAPT.ActionPlanTask__r.ActivityDate__c;
 		}else{
 			d = Date.today();
 		}

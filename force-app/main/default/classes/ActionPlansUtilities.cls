@@ -1016,8 +1016,8 @@ public with sharing class ActionPlansUtilities{
   		
   		List<ActionPlanTask__c> myList = new List<ActionPlanTask__c>();
   		myList = [ select a.Type__c, a.Subject__c, a.ActivityDate__c, a.Priority__c, a.Status__c, a.Dependent__c, 
-                    a.Name, a.User__c, a.User__r.Name, a.Id, a.DaysFromStart__c, a.CreatedById, a.APTaskTemplate__r.Name, 
-                    a.APTaskTemplate__r.Subject__c, a.ActionPlanTask__c, a.Action_Plan__c, a.Reminder__c,
+                    a.Name, a.User__c, a.User__r.Name, a.Id, a.DaysFromStart__c, a.CreatedById, a.ActionPlanTask__r.Name, 
+                    a.ActionPlanTask__r.Subject__c, a.ActionPlanTask__c, a.Action_Plan__c, a.Reminder__c,
                     a.SendEmail__c, a.Comments__c, a.Minutes_Reminder__c , a.taskIndex__c, a.Time_Reminder__c,
                		a.DueDateRelation__c, a.RelatedDatefield__c, a.CreateTaskWhen__c, a.AssignToType__c
                     from ActionPlanTask__c a 
@@ -1138,14 +1138,14 @@ public with sharing class ActionPlansUtilities{
     	Boolean result = true;
     	set<string> rejectStatus = new set<string>{'In progress','Not Started','Deferred','Waiting on someone else'};
 	
-    	List<ActionPlanTask__c> aptList =  [select  a.Status__c,a.APTaskTemplate__r.Id,a.APTaskTemplate__r.Status__c
+    	List<ActionPlanTask__c> aptList =  [select  a.Status__c,a.ActionPlanTask__r.Id,a.ActionPlanTask__r.Status__c
                          					 from ActionPlanTask__c a 
                          					 where a.Id =: apTaskId  
 					 					];
 		if (aptList.size() > 0){
 			if (aptList[0].ActionPlanTask__c !=null ){
 				
-				if (rejectStatus.contains(aptList[0].APTaskTemplate__r.Status__c))
+				if (rejectStatus.contains(aptList[0].ActionPlanTask__r.Status__c))
 					result = false;
 			}
 		

@@ -738,8 +738,8 @@ public with sharing class ActionPlanCreationController{
         System.currentPageReference().getParameters().put( 'remove', '1' );
         ActionPlanCreationController apCreateController = new ActionPlanCreationController( new Apexpages.StandardController( actionPlan ) );
         apCreateController.actionPlans.apTasks = [ select a.Type__c, a.Subject__c, a.ActivityDate__c, a.Priority__c, a.Status__c, a.Dependent__c, 
-                                                        a.Name, a.User__c, a.User__r.Name, a.Id, a.DaysFromStart__c, a.CreatedById, a.APTaskTemplate__r.Name, 
-                                                        a.APTaskTemplate__r.Subject__c, a.ActionPlanTask__c, a.Action_Plan__c, a.Reminder__c, 
+                                                        a.Name, a.User__c, a.User__r.Name, a.Id, a.DaysFromStart__c, a.CreatedById, a.ActionPlanTask__r.Name, 
+                                                        a.ActionPlanTask__r.Subject__c, a.ActionPlanTask__c, a.Action_Plan__c, a.Reminder__c, 
                                                         a.SendEmail__c, a.Comments__c 
                                                         from ActionPlanTask__c a 
                                                         where a.Action_Plan__c =: actionPlan.Id order by a.createdDate asc ];
@@ -796,8 +796,8 @@ public with sharing class ActionPlanCreationController{
         System.currentPageReference().getParameters().put( 'id', actionPlan.Id );
         ActionPlanCreationController apCreateController = new ActionPlanCreationController( new Apexpages.StandardController( actionPlan ) );
         apCreateController.actionPlans.apTasks = [ select a.Type__c, a.Subject__c, a.ActivityDate__c, a.Priority__c, a.Status__c, a.Dependent__c, 
-                                                        a.Name, a.User__c, a.User__r.Name, a.Id, a.DaysFromStart__c, a.CreatedById, a.APTaskTemplate__r.Name, 
-                                                        a.APTaskTemplate__r.Subject__c, a.ActionPlanTask__c, a.Action_Plan__c, a.Reminder__c, 
+                                                        a.Name, a.User__c, a.User__r.Name, a.Id, a.DaysFromStart__c, a.CreatedById, a.ActionPlanTask__r.Name, 
+                                                        a.ActionPlanTask__r.Subject__c, a.ActionPlanTask__c, a.Action_Plan__c, a.Reminder__c, 
                                                         a.SendEmail__c, a.Comments__c 
                                                         from ActionPlanTask__c a 
                                                         where a.Action_Plan__c =: actionPlan.Id order by a.createdDate asc ];
