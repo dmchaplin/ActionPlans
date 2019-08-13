@@ -143,10 +143,10 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
         for( ActionPlanTemplateTask__c t : aptTasks ){
             if( t.Dependent__c != 'None' && t.Dependent__c != null ){
                 Integer tempIndex 		= Integer.valueOf( t.Dependent__c );
-                t.ActionPlanTemplateTask__c 	= aptTasks[ tempIndex ].Id;
+                t.TemplateTaskDependency__c 	= aptTasks[ tempIndex ].Id;
             }
             else{
-            	t.ActionPlanTemplateTask__c = null;
+            	t.TemplateTaskDependency__c = null;
             }
         }
         
@@ -215,7 +215,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
             
             if( TempApId != null ) {
                 aptTasks = [ select a.Type__c, a.Subject__c, a.Priority__c, a.Dependent__c, a.Name, a.User__c, taskIndex__c,
-            				 a.User__r.Name, a.Id, a.DaysFromStart__c, a.CreatedById, a.Action_Plan_Template__c, a.ActionPlanTemplateTask__c,
+            				 a.User__r.Name, a.Id, a.DaysFromStart__c, a.CreatedById, a.Action_Plan_Template__c, a.TemplateTaskDependency__c,
             				 a.ActionPlanTemplateTasks__r.Subject__c, a.Reminder__c, a.SendEmail__c, a.Comments__c,
 							 a.DueDateRelation__c, a.RelatedDatefield__c, a.CreateTaskWhen__c, a.AssignToType__c
             				 From ActionPlanTemplateTask__c a 
@@ -297,7 +297,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
             ActionPlanTemplateTask__c aptTask;
             
             //check for dependent children and clear them since the parent is being removed.
-            aptTasks[ taskIndex ].ActionPlanTemplateTask__c    = null;
+            aptTasks[ taskIndex ].TemplateTaskDependency__c    = null;
             aptTasks[ taskIndex ].Dependent__c         	= null;
             
             Integer dependentApTask;
@@ -311,7 +311,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
             			aptTask.Dependent__c = String.valueOf( dependentApTask - 1 );	
             		}else if( dependentApTask == taskIndex ){
             			aptTask.Dependent__c = 'None';
-            			aptTask.ActionPlanTemplateTask__c    = null;
+            			aptTask.TemplateTaskDependency__c    = null;
             		}
             	}
             }

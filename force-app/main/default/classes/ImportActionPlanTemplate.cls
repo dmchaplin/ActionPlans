@@ -312,7 +312,7 @@ public with sharing class ImportActionPlanTemplate{
 				reader.next();
 				String referenceId = getDecodedString( reader );
 				if( referenceId != 'null' ){
-					apTaskAux.ActionPlanTemplateTask__c = referenceId;
+					apTaskAux.TemplateTaskDependency__c = referenceId;
 				}
 			}
 			//handle daysFromStart field
@@ -366,7 +366,7 @@ public with sharing class ImportActionPlanTemplate{
 		this.importedTasks.put( currentTaskOldId, apTaskAux );
 		//Note: removing ActionPlanTemplateTask__c reference field to be able to insert tasks.
 		ActionPlanTemplateTask__c clonedTask = apTaskAux.clone();
-		clonedTask.ActionPlanTemplateTask__c = null;
+		clonedTask.TemplateTaskDependency__c = null;
 		this.newTasks.put( currentTaskOldId, clonedTask );
 	}
 	
@@ -386,14 +386,14 @@ public with sharing class ImportActionPlanTemplate{
 			ActionPlanTemplateTask__c auxOldTask = this.importedTasks.get( key );
 
 			//checks to see if task has a reference to another task
-			if( auxOldTask.ActionPlanTemplateTask__c != null ){
-				if( String.valueOf( auxOldTask.ActionPlanTemplateTask__c ).Length() != 0 ){
-					String auxRefId 				= auxOldTask.ActionPlanTemplateTask__c;
+			if( auxOldTask.TemplateTaskDependency__c != null ){
+				if( String.valueOf( auxOldTask.TemplateTaskDependency__c ).Length() != 0 ){
+					String auxRefId 				= auxOldTask.TemplateTaskDependency__c;
 					//get dependent task
 					ActionPlanTemplateTask__c auxRefTask 	= this.newTasks.get( auxRefId );
 					
 					//Update task reference
-					auxNewTask.ActionPlanTemplateTask__c = auxRefTask.Id;
+					auxNewTask.TemplateTaskDependency__c = auxRefTask.Id;
 				}
 			}
 			updatedTasks.add( auxNewTask );
