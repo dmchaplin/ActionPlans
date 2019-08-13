@@ -1,4 +1,4 @@
-trigger ActionPlanTaskTemplateTrigger on ActionPlanTask__c (after undelete, after update) {
+trigger ActionPlanTaskTrigger2 on ActionPlanTask__c (after undelete, after update) {
 
 	set<ID> aPTaksIds= new set<ID>();
 		
