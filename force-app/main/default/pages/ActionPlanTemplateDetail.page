@@ -100,7 +100,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
                 <apex:dataTable value="{!TemplateTasks}" var="task" id="theTable" styleClass="sortable noBump">
 					<apex:column >&nbsp;</apex:column>
                     <apex:column id="columnOne" headerValue="{!$ObjectType.ActionPlanTemplateTask__c.fields.Subject__c.label}" value="{!task.Subject__c}" />
-                    <apex:column headerValue="{!$ObjectType.ActionPlanTemplateTask__c.fields.TemplateTaskDependency__c.label}" value="{!task.ActionPlanTemplateTasks__r.Subject__c}"   />
+                    <apex:column headerValue="{!$ObjectType.ActionPlanTemplateTask__c.fields.TemplateTaskDependency__c.label}" value="{!task.TemplateTaskDependency__r.Subject__c}"   />
 
 					<apex:column value="{!task.DueDateRelation__c}" headerValue="{!$ObjectType.ActionPlanTemplateTask__c.fields.DueDateRelation__c.label}" / >
 
