@@ -118,7 +118,7 @@
     </classAccesses>
     <fieldPermissions>
         <editable>true</editable>
-        <field>TemplateTaskDependency__c.TemplateTaskDependency__c</field>
+        <field>ActionPlanTemplateTask__c.TemplateTaskDependency__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
