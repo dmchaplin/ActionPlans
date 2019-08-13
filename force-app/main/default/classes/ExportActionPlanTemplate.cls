@@ -50,8 +50,8 @@ public with sharing class ExportActionPlanTemplate{
 	public Document export(){
 		
 		ActionPlanTemplate__c apTemplate = [ Select a.SkipWeekends__c, a.SkipDay__c, a.Name, a.Id, a.Description__c,
-												( Select Id, Name, Action_Plan_Template__c, ActionPlanTemplateTask__c, Comments__c, DaysFromStart__c, Dependent__c, 
-													Priority__c, Reminder__c, SendEmail__c, Subject__c, Type__c, Minutes_Reminder__c , taskIndex__c From apTasks__r )
+												( Select Id, Name, Action_Plan_Template__c, ActionPlanTemplateTask__c,  Comments__c, DaysFromStart__c, Dependent__c, 
+													Priority__c, Reminder__c, SendEmail__c, Subject__c, Type__c, Minutes_Reminder__c , taskIndex__c From ActionPlanTemplateTasks__r )
 												From ActionPlanTemplate__c a where a.Id =: this.templateId ];
 		
 		String xml 		= buildXmlString( apTemplate );
@@ -111,12 +111,12 @@ public with sharing class ExportActionPlanTemplate{
 		out.writeEndElement();
 		out.writeStartElement( null, 'ActionPlanTemplateTasks', null );
 
-		for( ActionPlanTemplateTask__c currentTask : target.apTasks__r ){
+		for( ActionPlanTemplateTask__c currentTask : target.ActionPlanTemplateTasks__r ){
 			out.writeStartElement( null, 'TaskTemplate', null );
 			writeElement( out, 'id', '' + currentTask.Id );
 			writeElement( out, 'templateId', '' + currentTask.Action_Plan_Template__c );
 			writeElement( out, 'subject', '' + currentTask.Subject__c );
-			if(target.apTasks__r.size() == 1){
+			if(target.ActionPlanTemplateTasks__r.size() == 1){
 				writeElement( out, 'dependent', '' + Label.ap_None );
 				writeElement( out, 'taskIndex', '0' );
 			}
