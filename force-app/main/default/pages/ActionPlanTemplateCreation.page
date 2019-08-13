@@ -128,7 +128,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 									<apex:inputField required="true" value="{!wrapTask.task.DueDateRelation__c}" />
 								</apex:column>
 
-		                        <apex:column headerValue="{!$ObjectType.ActionPlanTemplateTask__c.fields.ActionPlanTemplateTask__c.label}" rendered="{!IF(TemplateTaskSize > 1, true, false)}">
+		                        <apex:column headerValue="{!$ObjectType.ActionPlanTemplateTask__c.fields.TemplateTaskDependency__c.label}" rendered="{!IF(TemplateTaskSize > 1, true, false)}">
 		                            <apex:selectList id="dependent" value="{!wrapTask.task.Dependent__c}" multiselect="false" size="1" style="width:85px;" onchange="javascript:ActionPlanTemplateCreationScripts.checkDependent('{!$Component.taskTable.dependent}');">
 		                                <apex:selectOptions value="{!TemplateSubjectItems}" />
 		                            </apex:selectList>
