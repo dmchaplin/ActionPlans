@@ -30,8 +30,9 @@ OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISE
 OF THE POSSIBILITY OF SUCH DAMAGE.
 
 */
- public with sharing class ActionPlanTemplates{
- 	
+ public with sharing class ActionPlanTemplates extends fflib_SObjectDomain 
+ 	implements IActionPlanTemplate{
+
  	public Double							taskIndexOrder			{ get; set; }
     public ActionPlanTemplate__c    		actionPlanTemplate;
     public List<ActionPlanTemplateTask__c> 		pendingTemplateDeletes;
@@ -42,9 +43,22 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
     
     /**
     * Constructor
+    * @param List of actionPT
+    */
+    public ActionPlanTemplates(List<ActionPlanTemplate__c> sObjectList) {
+        super(sobjectList);
+    }
+
+
+    /**
+    * Constructor
     * @param actionPT
     */
     public ActionPlanTemplates( ActionPlanTemplate__c actionPT ){
+
+		//call the abstract constructor
+		super(new List<ActionPlanTemplate__c>());
+
     	this.taskMap			= new Map<String, ActionPlanTemplateTask__c>();
     	this.errorMsg			= null;
         this.taskLimit  		= 75;
