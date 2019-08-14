@@ -15,14 +15,15 @@ public class Application
 					DeveloperWorkItem__c.SObjectType,
 					TrainingWorkItem__c.SObjectType,
 					DesignWorkItem__c.SObjectType });	
+*/
 
 	// Configure and create the ServiceFactory for this Application
 	public static final fflib_Application.ServiceFactory Service = 
 		new fflib_Application.ServiceFactory( 
 			new Map<Type, Type> {
-					IOpportunitiesService.class => OpportunitiesServiceImpl.class,
-					IInvoicingService.class => InvoicingServiceImpl.class });
-*/
+					IOpportunitiesService.class => OpportunitiesServiceImpl.class}
+					);
+
 	// Configure and create the SelectorFactory for this Application
 	public static final fflib_Application.SelectorFactory Selector = 
 		new fflib_Application.SelectorFactory(
