@@ -9,4 +9,5 @@
     <openType>sidebar</openType>
     <protected>false</protected>
     <url>/apex/ActionPlanCreation?refType=Campaign&amp;refId={!Campaign.Id}</url>
+    <encodingKey>UTF-8</encodingKey>
 </WebLink>

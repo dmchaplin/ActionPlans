@@ -10,4 +10,5 @@
     <protected>false</protected>
     <requireRowSelection>false</requireRowSelection>
     <url>/apex/ActionPlanCreation?refType=Contact&amp;refId={!Contact.Id}</url>
+    <encodingKey>UTF-8</encodingKey>
 </WebLink>

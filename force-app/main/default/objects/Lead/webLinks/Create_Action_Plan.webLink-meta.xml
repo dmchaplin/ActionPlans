@@ -9,4 +9,5 @@
     <openType>sidebar</openType>
     <protected>false</protected>
     <url>/apex/ActionPlanCreation?refType=Lead&amp;refId={!Lead.Id}</url>
+    <encodingKey>UTF-8</encodingKey>
 </WebLink>
