@@ -53,7 +53,7 @@ public with sharing class ActionPlanTemplateCreationController{
         if( System.currentPageReference().getParameters().get( 'id' ) != null ){
         	
 			this.actionPlanTemplateId 	= System.currentPageReference().getParameters().get( 'id' );
-			this.actionPlanTemplate		= ActionPlanTemplateService.getAPT(actionPlanTemplateId);
+			this.actionPlanTemplate		= ActionPlanTemplatesService.getAPT(actionPlanTemplateId);
 
 			this.taskIndex = this.calculateTaskIndexValue();
 		}

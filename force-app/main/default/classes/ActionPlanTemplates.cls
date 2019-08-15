@@ -57,7 +57,8 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
     public ActionPlanTemplates( ActionPlanTemplate__c actionPT ){
 
 		//call the abstract constructor
-		super(new List<ActionPlanTemplate__c>());
+	//	super(new List<ActionPlanTemplate__c>());
+		this(new List<ActionPlanTemplate__c>());
 
     	this.taskMap			= new Map<String, ActionPlanTemplateTask__c>();
     	this.errorMsg			= null;

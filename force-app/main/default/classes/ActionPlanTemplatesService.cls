@@ -1,17 +1,17 @@
-public with sharing class ActionPlanTemplateService {
-    public ActionPlanTemplateService() {
+public with sharing class ActionPlanTemplatesService {
+    public ActionPlanTemplatesService() {
 
     }
 
-    global static void saveAPT(Set<ID> aptIds){
+    public static void saveAPT(Set<ID> aptIds){
 
 
     }
 
-    global static ActionPlanTemplate__c getAPT(ID aptId){
+    public static ActionPlanTemplate__c getAPT(ID aptId){
         set<id> ids = new set<id>();
         ids.add(aptId);
-        return ActionPlanTemplatesSelector.newInstance().selectById(ids);
+        return ActionPlanTemplatesSelector.newInstance().selectById(ids)[0];
 
     }
 }
