@@ -53,11 +53,8 @@ public with sharing class ActionPlanTemplateCreationController{
         if( System.currentPageReference().getParameters().get( 'id' ) != null ){
         	
 			this.actionPlanTemplateId 	= System.currentPageReference().getParameters().get( 'id' );
-			this.actionPlanTemplate 	= [ select a.Id, a.Name, a.Description__c, a.SkipWeekends__c, a.SkipDay__c, a.LastModifiedDate, 
-												a.LastModifiedBy.Name, a.LastModifiedById, a.CreatedDate, a.CreatedBy.Name, a.CreatedById, 
-												a.Owner.Name from ActionPlanTemplate__c a
-												Where a.Id =: this.actionPlanTemplateId limit 1 ];
-			
+			this.actionPlanTemplate		= ActionPlanTemplateService.getAPT(actionPlanTemplateId);
+
 			this.taskIndex = this.calculateTaskIndexValue();
 		}
 		else{
