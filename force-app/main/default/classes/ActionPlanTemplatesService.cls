@@ -1,4 +1,9 @@
 public with sharing class ActionPlanTemplatesService {
+
+ 	public Double	taskIndexOrder			{ get; set; }
+    public ActionPlanTemplatesDomain	actionPlanTemplates		{ get; set; }
+    
+
     public ActionPlanTemplatesService() {
 
     }
@@ -14,4 +19,20 @@ public with sharing class ActionPlanTemplatesService {
         return ActionPlanTemplatesSelector.newInstance().selectById(ids)[0];
 
     }
+
+
+    public integer getTemplateTaskSize(){
+        ActionPlanTemplate__c apt = (ActionPlanTemplate__c) actionPlanTemplates.records[0];
+        
+        integer x;
+        if (apt.ActionPlanTemplateTasks__r.isEmpty()) {x = 0;}
+        else {x = apt.ActionPlanTemplateTasks__r.size();}
+            
+       return x;
+    }
+
+    public string ErrorMsg(){
+        return actionPlanTemplates.errorMsg;
+    }
+
 }
