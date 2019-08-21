@@ -1,4 +1,4 @@
-public with sharing class ActionPlanTemplatesTasks 
+public with sharing class ActionPlanTemplateTasks 
     extends fflib_SObjectDomain 
  	implements IActionPlanTemplate{
 
