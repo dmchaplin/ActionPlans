@@ -4,9 +4,10 @@
     <externalId>false</externalId>
     <label>Action Plan Template</label>
     <referenceTo>ActionPlanTemplate__c</referenceTo>
-    <relationshipLabel>APT Task Templates</relationshipLabel>
     <relationshipName>ActionPlanTemplateTasks</relationshipName>
     <relationshipOrder>0</relationshipOrder>
+    <reparentableMasterDetail>false</reparentableMasterDetail>
+    <trackTrending>false</trackTrending>
     <type>MasterDetail</type>
     <writeRequiresMasterRead>false</writeRequiresMasterRead>
 </CustomField>

@@ -3,6 +3,7 @@
     <fullName>User__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <externalId>false</externalId>
+    <inlineHelpText>leave blank to assign to owner</inlineHelpText>
     <label>Assigned To</label>
     <referenceTo>User</referenceTo>
     <relationshipName>apTaskUser</relationshipName>

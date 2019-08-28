@@ -6,5 +6,6 @@
     <externalId>false</externalId>
     <inlineHelpText>If selected, tasks included in an Action Plan will not be given a Due Date that falls on a weekend.</inlineHelpText>
     <label>Skip Weekends</label>
+    <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

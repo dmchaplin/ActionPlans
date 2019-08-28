@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>TemplateTaskDependency__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
     <externalId>false</externalId>
     <label>Task Dependency</label>
+    <lookupFilter>
+        <active>true</active>
+        <errorMessage>Dependent Task required to be from same Action Plan Template</errorMessage>
+        <filterItems>
+            <field>$Source.Action_Plan_Template__c</field>
+            <operation>equals</operation>
+            <valueField>$Source.Action_Plan_Template__c</valueField>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
     <referenceTo>ActionPlanTemplateTask__c</referenceTo>
-    <relationshipLabel>APT Task Templates</relationshipLabel>
+    <relationshipLabel>Action Plan Template Tasks</relationshipLabel>
     <relationshipName>ActionPlanTemplateTasks</relationshipName>
     <required>false</required>
+    <trackTrending>false</trackTrending>
     <type>Lookup</type>
 </CustomField>
