@@ -40,7 +40,7 @@ public with sharing class ActionPlanTemplateTasks
             //if after dependent task
             if ((r.DueDateRelation__c == 'After Dependent Task') && (r.TemplateTaskDependency__c == null))
             //then dependnt task required
-                r.TemplateTaskDependency__c.addError('Depent Task required');
+                r.TemplateTaskDependency__c.addError('Depentent Task required');
         }
 
     }
