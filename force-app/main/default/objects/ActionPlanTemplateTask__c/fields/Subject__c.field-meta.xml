@@ -3,9 +3,9 @@
     <fullName>Subject__c</fullName>
     <businessStatus>DeprecateCandidate</businessStatus>
     <externalId>false</externalId>
-    <label>Subjectxx</label>
+    <label>Subject_toDelete</label>
     <length>255</length>
-    <required>true</required>
+    <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Text</type>
     <unique>false</unique>
