@@ -1019,7 +1019,7 @@ public with sharing class ActionPlansUtilities{
                     a.Name, a.User__c, a.User__r.Name, a.Id, a.DaysFromStart__c, a.CreatedById, a.ActionPlanTask__r.Name, 
                     a.ActionPlanTask__r.Subject__c, a.ActionPlanTask__c, a.Action_Plan__c, a.Reminder__c,
                     a.SendEmail__c, a.Comments__c, a.Minutes_Reminder__c , a.taskIndex__c, a.Time_Reminder__c,
-               		a.DueDateRelation__c, a.RelatedDatefield__c, a.CreateTaskWhen__c, a.AssignToType__c
+               		a.DueDateRelation__c, a.RelatedDatefield__c, a.CreateTaskWhen__c
                     from ActionPlanTask__c a 
                     where a.Action_Plan__c =: actionPlanId order by a.taskIndex__c asc ];
   		return myList;

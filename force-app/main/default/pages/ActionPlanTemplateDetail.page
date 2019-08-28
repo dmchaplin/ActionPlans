@@ -123,11 +123,6 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
                     </apex:column>
 
 
-                    <apex:column headerValue="{!$ObjectType.ActionPlanTemplateTask__c.fields.AssignToType__c.label}">
-                        <apex:outputField value="{!task.AssignToType__c}" />
-                    </apex:column>
-
-
 
 					<apex:column headerValue="{!$ObjectType.ActionPlanTask__c.fields.User__c.label}" styleClass="assigned_to_field" >
                     	<apex:outputField value="{!task.User__c}"  />

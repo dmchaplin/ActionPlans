@@ -140,11 +140,6 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
                             <apex:outputField value="{!task.ActivityDate__c}" rendered="{!IF(task.ActivityDate__c >= TODAY() || task.Status__c == 'Completed', true, false)}" />
                         </apex:column>
 
-                        <apex:column headerValue="{!$ObjectType.ActionPlanTask__c.fields.AssignToType__c.label}">
-                            <apex:outputField value="{!task.AssignToType__c}" />
-                        </apex:column>
-
-
                         <apex:column headerValue="{!$ObjectType.ActionPlanTask__c.fields.User__c.label}" styleClass="assigned_to_field" >
                             <apex:outputField value="{!task.User__c}"  />
                         </apex:column>

@@ -158,10 +158,6 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 								</apex:column>
 
 
-								<apex:column headerValue="{!$ObjectType.ActionPlanTemplateTask__c.fields.AssignToType__c.label}">
-									<apex:inputField required="false" value="{!wrapTask.task.AssignToType__c}" />
-								</apex:column>
-
 		                        <apex:column headerValue="{!$ObjectType.ActionPlanTemplateTask__c.fields.User__c.label}">
 		                        	<apex:pageBlockSectionItem >
 		                        		<apex:inputField required="false" value="{!wrapTask.task.User__c}" />

@@ -342,10 +342,6 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 									<apex:inputField required="false" value="{!wrapTask.task.CreateTaskWhen__c}" />
 								</apex:column>
 
-								<apex:column headerValue="{!$ObjectType.ActionPlanTask__c.fields.AssignToType__c.label}">
-									<apex:inputField required="false" value="{!wrapTask.task.AssignToType__c}" />
-								</apex:column>
-
 		                        <!--  Tasks Assigned TO  -->			                        
 								<apex:column headerValue="{!$ObjectType.ActionPlanTask__c.fields.User__c.label}"  headerClass="fifthN" >
 									<apex:outputPanel id="ownerRecordPanel" style="">
