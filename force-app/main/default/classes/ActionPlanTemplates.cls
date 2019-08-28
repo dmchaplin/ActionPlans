@@ -44,6 +44,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
     * Constructor
     * @param actionPT
     */
+
     public ActionPlanTemplates( ActionPlanTemplate__c actionPT ){
     	this.taskMap			= new Map<String, ActionPlanTemplateTask__c>();
     	this.errorMsg			= null;

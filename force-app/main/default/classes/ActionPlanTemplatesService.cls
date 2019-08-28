@@ -1,6 +1,6 @@
 public with sharing class ActionPlanTemplatesService {
 
- 	public Double	taskIndexOrder			{ get; set; }
+ 	
     public ActionPlanTemplatesDomain	actionPlanTemplates		{ get; set; }
     
 
@@ -16,7 +16,7 @@ public with sharing class ActionPlanTemplatesService {
     public static ActionPlanTemplate__c getAPT(ID aptId){
         set<id> ids = new set<id>();
         ids.add(aptId);
-        return ActionPlanTemplatesSelector.newInstance().selectById(ids)[0];
+        return ActionPlanTemplatesSelector.newInstance().selectByIdWithTasks(ids)[0];
 
     }
 
