@@ -1162,6 +1162,11 @@ public with sharing class ActionPlansUtilities{
     	Map<String, Schema.SObjectField> fieldsMap = Schema.SObjectType.User.fields.getMap();
  		return fieldsMap.containsKey('UserPreferencesTaskRemindersCheckboxDefault');
     }
+
+    public static Boolean getDisplayReminderStatic(){
+    	Map<String, Schema.SObjectField> fieldsMap = Schema.SObjectType.User.fields.getMap();
+ 		return fieldsMap.containsKey('UserPreferencesTaskRemindersCheckboxDefault');
+    }
     
     /**
     * Gets task reminder default time for current user
