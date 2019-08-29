@@ -8,7 +8,7 @@
         <active>true</active>
         <errorMessage>Dependent Task required to be from same Action Plan Template</errorMessage>
         <filterItems>
-            <field>$Source.Action_Plan_Template__c</field>
+            <field>ActionPlanTemplateTask__c.Action_Plan_Template__c</field>
             <operation>equals</operation>
             <valueField>$Source.Action_Plan_Template__c</valueField>
         </filterItems>
