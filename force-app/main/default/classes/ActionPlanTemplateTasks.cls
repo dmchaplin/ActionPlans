@@ -21,6 +21,16 @@ public with sharing class ActionPlanTemplateTasks
 
 		for(ActionPlanTemplateTask__c r : (List<ActionPlanTemplateTask__c>) Records) {
 	    
+
+            //if due date relationship is --none--
+            if ((r.DueDateRelation__c ==null) && 
+                (r.DaysFromStart__c !=null ||
+                r.TemplateTaskDependency__c != null ||
+                r.RelatedDateField__c !=null ||
+                r.CreateTaskWhen__c !=null)) {
+               r.DueDateRelation__c.addError('The next 4 fields must be blank when Due Date Relation is --none');
+            }
+
            // if Due Date Relationship if field,
             if (r.DueDateRelation__c.contains('Field')) {
                 //then related date field required
