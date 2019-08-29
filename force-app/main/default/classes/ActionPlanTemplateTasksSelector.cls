@@ -14,7 +14,8 @@ public class ActionPlanTemplateTasksSelector
 	{
 		return new List<Schema.SObjectField> {
 			ActionPlanTemplateTask__c.Id,
-			ActionPlanTemplateTask__c.Action_Plan_Template__c
+			ActionPlanTemplateTask__c.Action_Plan_Template__c,
+			ActionPlanTemplateTask__c.TemplateTaskDependency__c
 			
 		};
 	}

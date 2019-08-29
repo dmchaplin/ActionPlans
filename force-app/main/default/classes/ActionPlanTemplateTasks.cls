@@ -32,7 +32,7 @@ public with sharing class ActionPlanTemplateTasks
             }
 
            // if Due Date Relationship if field,
-            if (r.DueDateRelation__c.contains('Field')) {
+            if (r.DueDateRelation__c!=null && r.DueDateRelation__c.contains('Field')) {
                 //then related date field required
                 If (r.RelatedDateField__c == null)  
                     r.RelatedDateField__c.addError('Related Date field required');
@@ -51,7 +51,7 @@ public with sharing class ActionPlanTemplateTasks
             if ((r.DueDateRelation__c == 'After Dependent Task') && (r.TemplateTaskDependency__c == null))
                 r.TemplateTaskDependency__c.addError('Depentent Task required');
 
-            checkCyclicDependency();
+            checkCyclicalDependency();
         }
 
     }
@@ -77,10 +77,10 @@ public with sharing class ActionPlanTemplateTasks
     */
 
     public void checkCyclicalDependency(){
-        //get id set of records
+        //get id set of all the APT records (not the tasks, but the plans template)
         Set<ID> tIds = new Set<ID>();
-        for(SObject r : Records){
-            tIds.add(r.Id);
+        for(ActionPlanTemplateTask__c r : (List<ActionPlanTemplateTask__c>)Records){
+            tIds.add(r.Action_Plan_Template__c);
         }
 
         //get the aptt with tasks for any task for any record being updated
@@ -98,21 +98,21 @@ public with sharing class ActionPlanTemplateTasks
                     t.TemplateTaskDependency__c.addError(Label.ap_ItselfDependencyError); */
 
                 //get all the tasks associated with this PlanTemplate
-                ActionPlanTemplate__c apt = apts.get(t.id);
+                ActionPlanTemplate__c apt = apts.get(t.Action_Plan_Template__c);
                 Map<Id, ActionPlanTemplateTask__c> aptts = new Map<Id, ActionPlanTemplateTask__c>(apt.ActionPlanTemplateTasks__r);
                 
 
                 //make sure the current task is not dependent 
                 //on itself somwhere in in the hierachy
-//                Boolean hasCyclicalDependency = false;
+                Boolean hasCyclicalDependency = false;
 
                 ActionPlanTemplateTask__c tStep = t;
-                while (tStep.TemplateTaskDependency__c != null) {
+                while (tStep.TemplateTaskDependency__c != null && hasCyclicalDependency==false) {
                     //check that the next step in the depency
                     //is not is the same as the current record
                     if (tstep.TemplateTaskDependency__c == t.Id) {
                         t.TemplateTaskDependency__c.addError(Label.ap_Errors_RemoveCyclicDependency);
-  //                      hasCyclicalDependency = true;
+                        hasCyclicalDependency = true;
                     }
                     
                     //get the next dependent task 
