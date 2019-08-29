@@ -3,7 +3,7 @@
     <fullName>CreateTaskWhen__c</fullName>
     <externalId>false</externalId>
     <inlineHelpText>The Number of Days before Due Date that task should be created.  Blank will create a task as soon as possible.</inlineHelpText>
-    <label>Create Task When</label>
+    <label>Days before Due Date to Create Task</label>
     <precision>3</precision>
     <required>false</required>
     <scale>0</scale>
