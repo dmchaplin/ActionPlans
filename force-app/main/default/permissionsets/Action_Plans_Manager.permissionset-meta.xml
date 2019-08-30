@@ -89,10 +89,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>ImportTemplateController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>ProcessorControl</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -283,11 +279,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>ActionPlan__c.Action_Plan__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>ActionPlan__c.Campaign__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -425,10 +416,6 @@
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>ActionPlanTemplateImport</apexPage>
-        <enabled>true</enabled>
-    </pageAccesses>
-    <pageAccesses>
         <apexPage>ActionPlanTemplateList</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
@@ -446,10 +433,6 @@
     </tabSettings>
     <tabSettings>
         <tab>ActionPlansAbout</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
-    <tabSettings>
-        <tab>Action_Plans_Template_Import</tab>
         <visibility>Visible</visibility>
     </tabSettings>
 </PermissionSet>
