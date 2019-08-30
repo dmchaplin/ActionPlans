@@ -27,5 +27,8 @@ ehthumbs.db
 [Dd]esktop.ini
 $RECYCLE.BIN/
 
+force-app/fflib-common
+force-app/fflib-mocks
+
 .forceignore
 .gitignore
