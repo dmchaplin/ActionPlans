@@ -1,7 +1,7 @@
 public with sharing class ActionPlanTemplatesService {
 
  	
-    public ActionPlanTemplatesDomain	actionPlanTemplates		{ get; set; }
+    public ActionPlanTemplates	actionPlanTemplates		{ get; set; }
     
 
     public ActionPlanTemplatesService() {
