@@ -157,7 +157,7 @@
     <externalSharingModel>ControlledByParent</externalSharingModel>
     <label>Action Plan Task</label>
     <nameField>
-        <label>APTaskTemplate Name</label>
+        <label>Subject</label>
         <type>Text</type>
     </nameField>
     <pluralLabel>Action Plan Tasks</pluralLabel>
