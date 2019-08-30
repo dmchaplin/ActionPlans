@@ -17,6 +17,7 @@ public class ActionPlanTemplatesSelector extends fflib_SObjectSelector
 			ActionPlanTemplate__c.Name,
 			ActionPlanTemplate__c.ImportId__c,
 			ActionPlanTemplate__c.SkipDay__c,
+			ActionPlanTemplate__c.SkipDefaultCompanyHolidays__c,
 			ActionPlanTemplate__c.SkipWeekends__c,
 			ActionPlanTemplate__c.TaskRecordTypeID__c
 		};
